@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Network.dart';
+import 'package:hassle_free/screens/UserPass.dart';
 import 'package:hassle_free/screens/register.dart';
 
 class Login extends StatefulWidget {
@@ -16,13 +17,19 @@ class _LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
   bool _usernameEnabled = true;
   bool _passwordEnabled = true;
-  bool _loginButtonEnabled = true;
+  bool _signUpButtonEnabled = true;
+  bool _showPasswordEnabled = true;
   final formGlobalKey = GlobalKey<FormState>();
 
   Future _validatelogin() async {
     if (formGlobalKey.currentState!.validate() == true) {
-      await Network.login(
-          userNameController.text, passwordController.text, context);
+      if (await Network.login(userNameController.text.trim(),
+          passwordController.text.trim(), context)) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => UserPass()),
+        );
+      }
     }
   }
 
@@ -96,7 +103,7 @@ class _LoginState extends State<Login> {
                             TextFormField(
                               enabled: _passwordEnabled,
                               controller: passwordController,
-                              obscureText: true,
+                              obscureText: _showPasswordEnabled,
                               decoration: InputDecoration(
                                 hintText: "PASSWORD",
                                 hintStyle: TextStyle(fontSize: height * 0.025),
@@ -104,6 +111,20 @@ class _LoginState extends State<Login> {
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 prefixIcon: Icon(Icons.lock),
+                                suffixIcon: InkWell(
+                                  child: Icon(_showPasswordEnabled
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onTap: () {
+                                    setState(() {
+                                      if (_showPasswordEnabled == true) {
+                                        _showPasswordEnabled = false;
+                                      } else {
+                                        _showPasswordEnabled = true;
+                                      }
+                                    });
+                                  },
+                                ),
                               ),
                               validator: (valPassword) {
                                 if (valPassword!.isEmpty) {
@@ -116,19 +137,19 @@ class _LoginState extends State<Login> {
                                 }
                               },
                             ),
-                            _loginButtonEnabled
+                            _signUpButtonEnabled
                                 ? ElevatedButton(
                                     onPressed: () async {
                                       setState(() {
                                         _usernameEnabled = false;
                                         _passwordEnabled = false;
-                                        _loginButtonEnabled = false;
+                                        _signUpButtonEnabled = false;
                                       });
                                       await _validatelogin();
                                       setState(() {
                                         _usernameEnabled = true;
                                         _passwordEnabled = true;
-                                        _loginButtonEnabled = true;
+                                        _signUpButtonEnabled = true;
                                       });
                                     },
                                     child: Text(
@@ -185,10 +206,11 @@ class _LoginState extends State<Login> {
                                 style: TextStyle(color: Color(0xFF747474))),
                             TextSpan(
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Register())),
+                                  ..onTap = () => Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Register()),
+                                      ),
                                 text: " SIGN UP",
                                 style: TextStyle(color: Colors.blue))
                           ],

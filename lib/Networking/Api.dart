@@ -4,4 +4,5 @@ class Api {
 
   //authentication
   static String login = domain + '/login';
+  static String register = domain + '/register';
 }
