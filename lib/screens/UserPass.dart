@@ -1,9 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/Login.dart';
+import 'package:hassle_free/utils/CustomSnackBar.dart';
+import 'package:hassle_free/utils/BottomModalSheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPass extends StatefulWidget {
@@ -19,7 +21,7 @@ class _UserPassState extends State<UserPass> {
     Colors.blue,
     Colors.cyan,
     Colors.green,
-    Colors.yellow,
+    Colors.yellow[700],
   ];
   List<Pass> passData = [];
   @override
@@ -49,6 +51,12 @@ class _UserPassState extends State<UserPass> {
                 TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.add),
+          backgroundColor:
+              Colors.primaries[Random().nextInt(Colors.primaries.length)],
+        ),
         body: Column(
           children: [
             Expanded(
@@ -64,7 +72,7 @@ class _UserPassState extends State<UserPass> {
                           Color randomColor = Colors.primaries[
                               Random().nextInt(Colors.primaries.length)];
                           return Padding(
-                            padding: const EdgeInsets.all(25.0),
+                            padding: const EdgeInsets.all(18.0),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: randomColor,
@@ -78,18 +86,217 @@ class _UserPassState extends State<UserPass> {
                               ),
                               height: height * 0.2,
                               width: width * 0.4,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    passData[index].appName,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: height * 0.05,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          passData[index].appName,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: height * 0.040,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              passData[index].username,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: height * 0.030,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () async {
+                                                ClipboardData data =
+                                                    ClipboardData(
+                                                        text: passData[index]
+                                                            .username);
+                                                await Clipboard.setData(data);
+                                                customSnackBar(
+                                                    context,
+                                                    "COPIED TO CLIPBOARD",
+                                                    Colors.green);
+                                              },
+                                              icon: Icon(
+                                                Icons.copy_outlined,
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  Text(passData[index].username),
-                                  Text(passData[index].passwordId.toString()),
-                                ],
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                                backgroundColor: randomColor,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  25),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  25)),
+                                                ),
+                                                context: context,
+                                                builder: (context) {
+                                                  return SizedBox(
+                                                    height: height * 0.25,
+                                                    child: SizedBox(
+                                                      child: FutureBuilder(
+                                                        future: Network.decrypt(
+                                                            passData[index]
+                                                                .encryptedPassword,
+                                                            context),
+                                                        builder: (_, snapshot) {
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return SizedBox(
+                                                              child: Column(
+                                                                children: [
+                                                                  Text(
+                                                                    passData[
+                                                                            index]
+                                                                        .username,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          height *
+                                                                              0.040,
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    snapshot
+                                                                        .data
+                                                                        .toString(),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          height *
+                                                                              0.040,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return Column(
+                                                              children: [
+                                                                CircularProgressIndicator()
+                                                              ],
+                                                            );
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                          },
+                                          icon: Icon(
+                                            Icons.edit,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                                backgroundColor: randomColor,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  25),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  25)),
+                                                ),
+                                                context: context,
+                                                builder: (context) {
+                                                  return SizedBox(
+                                                    height: height * 0.25,
+                                                    child: SizedBox(
+                                                      child: FutureBuilder(
+                                                        future: Network.decrypt(
+                                                            passData[index]
+                                                                .encryptedPassword,
+                                                            context),
+                                                        builder: (_, snapshot) {
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return SizedBox(
+                                                              child: Column(
+                                                                children: [
+                                                                  Text(
+                                                                    passData[
+                                                                            index]
+                                                                        .username,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          height *
+                                                                              0.040,
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    snapshot
+                                                                        .data
+                                                                        .toString(),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          height *
+                                                                              0.040,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return Column(
+                                                              children: [
+                                                                CircularProgressIndicator()
+                                                              ],
+                                                            );
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                          },
+                                          icon: Icon(
+                                            Icons.lock_outline,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           );

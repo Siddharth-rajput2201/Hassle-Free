@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
@@ -50,7 +51,7 @@ class Network {
   }
 
   static Future<bool> register(
-      String username, String password, BuildContext context) async {
+    String username, String password, BuildContext context) async {
     var url = Uri.parse(Api.register);
     Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
     try {
@@ -102,9 +103,38 @@ class Network {
         return [];
       }
     } catch (error) {
-      customSnackBar(context, "ERROR", Colors.black);
+      customSnackBar(context, "ERROR", Colors.red);
       log(error.toString());
       return [];
+    }
+  }
+
+  static Future<String> decrypt(String encryptedPass,BuildContext context,) async {
+    var url = Uri.parse(Api.decrypt);
+    String token = await Storage.getToken();
+    String apppass = await Storage.getPassword();
+    log(token);
+    log(apppass);
+    log(encryptedPass);
+    Map body = {
+      'JWT_TOKEN': token,
+      'APP_PASS' : encryptedPass,
+      'PASS' : apppass,
+      };
+    try {
+      final response = await Http.post(url, body: body);
+      if (response.statusCode == 200) {
+        LinkedHashMap data = json.decode(response.body);
+        return data['PASSWORD'];
+      } else {
+        log(response.body);
+        customSnackBar(context, "ERROR", Colors.red);
+        return "";
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.black);
+      log(error.toString());
+      return "";
     }
   }
 }

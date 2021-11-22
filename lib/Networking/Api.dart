@@ -8,4 +8,5 @@ class Api {
 
   //data
   static String retrieve = domain + '/retrieve';
+  static String decrypt = domain + '/decrypt';
 }

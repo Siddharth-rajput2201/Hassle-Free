@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/UserPass.dart';
-import 'package:hassle_free/screens/register.dart';
+import 'package:hassle_free/screens/Register.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
