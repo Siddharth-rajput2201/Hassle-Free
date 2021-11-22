@@ -19,6 +19,7 @@ class _RegisterState extends State<Register> {
   TextEditingController confirmPasswordController = TextEditingController();
   bool _usernameEnabled = true;
   bool _passwordEnabled = true;
+  bool _confirmPasswordEnabled = true;
   bool _loginButtonEnabled = true;
   bool _showPasswordEnabled = true;
   bool _showConfirmPasswordEnabled = true;
@@ -135,7 +136,7 @@ class _RegisterState extends State<Register> {
                               },
                             ),
                             TextFormField(
-                              enabled: _passwordEnabled,
+                              enabled: _confirmPasswordEnabled,
                               controller: confirmPasswordController,
                               obscureText: _showConfirmPasswordEnabled,
                               decoration: InputDecoration(
@@ -179,12 +180,14 @@ class _RegisterState extends State<Register> {
                                         _usernameEnabled = false;
                                         _passwordEnabled = false;
                                         _loginButtonEnabled = false;
+                                        _confirmPasswordEnabled = false;
                                       });
                                       await _validatelogin();
                                       setState(() {
                                         _usernameEnabled = true;
                                         _passwordEnabled = true;
                                         _loginButtonEnabled = true;
+                                        _confirmPasswordEnabled = true;
                                       });
                                     },
                                     child: Text(
@@ -241,7 +244,7 @@ class _RegisterState extends State<Register> {
                                 style: TextStyle(color: Color(0xFF747474))),
                             TextSpan(
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () => Navigator.push(
+                                  ..onTap = () => Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Login()),
