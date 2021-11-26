@@ -87,6 +87,44 @@ class Network {
     }
   }
 
+    static Future<bool> addpass(
+    String appusername, String apppassword, String appname,BuildContext context) async {
+    var url = Uri.parse(Api.add);
+    String token = await Storage.getToken();
+    String userpass = await Storage.getPassword();
+    Map body = {
+    'APP_NAME': appname ,
+    'APP_USERNAME': appusername,
+    'APP_PASSWORD': apppassword,
+    'USER_PASSWORD': userpass,
+    'JWT_TOKEN': token
+     };
+    try {
+      final response = await Http.post(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200 &&
+          data['message'] == "ADDED SUCCESSFULLY") {
+        customSnackBar(
+            context, "ADDED SUCCESSFULLY", Colors.green);
+        return true;
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+          return false;
+        }
+       else {
+          log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+          return false;
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+      return false;
+    }
+  }
+
   static Future<List<Pass>> retrieve(BuildContext context) async {
     var url = Uri.parse(Api.retrieve);
     String token = await Storage.getToken();

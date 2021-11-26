@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/Login.dart';
+import 'package:hassle_free/utils/BottomModalSheetAddPass.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -17,6 +18,7 @@ class UserPass extends StatefulWidget {
 
 class _UserPassState extends State<UserPass> {
   List<Pass> passData = [];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -45,7 +47,19 @@ class _UserPassState extends State<UserPass> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
+                context: context,
+                builder: (context) {
+                  
+                  return BottomModalSheetAddPass();
+                });
+          },
           child: Icon(Icons.add),
           backgroundColor:
               Colors.primaries[Random().nextInt(Colors.primaries.length)],
@@ -134,7 +148,6 @@ class _UserPassState extends State<UserPass> {
                                           builder: (_, snapshot) {
                                             if (snapshot.hasData) {
                                               return Row(
-                                                
                                                 children: [
                                                   Text(
                                                     snapshot.data.toString(),
@@ -143,7 +156,9 @@ class _UserPassState extends State<UserPass> {
                                                       fontSize: height * 0.030,
                                                     ),
                                                   ),
-                                                  SizedBox(width: width * 0.025,),
+                                                  SizedBox(
+                                                    width: width * 0.025,
+                                                  ),
                                                   InkWell(
                                                     onTap: () async {
                                                       ClipboardData data =
