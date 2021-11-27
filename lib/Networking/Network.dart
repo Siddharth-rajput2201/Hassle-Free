@@ -37,7 +37,11 @@ class Network {
           customSnackBar(
               context, "EITHER USERNAME OR PASSWORD IS INCORRECT", Colors.red);
           return false;
-        } else {
+        } 
+         if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -74,7 +78,11 @@ class Network {
         if (data['message'] == "PASSWORD LENGTH TOO LONG") {
           customSnackBar(context, "PASSWORD LENGTH TOO LONG", Colors.red);
           return false;
-        } else {
+        } 
+        if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -113,6 +121,49 @@ class Network {
           return false;
         }
        else {
+          if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }
+         else{ log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+          return false;
+         }
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+      return false;
+    }
+  }
+
+    static Future<bool> deletepass(
+    String passwordid,BuildContext context) async {
+    var url = Uri.parse(Api.delete);
+    String token = await Storage.getToken();
+    Map body = {
+    'PASSWORD_ID': passwordid ,
+    'JWT_TOKEN': token
+     };
+    try {
+      final response = await Http.delete(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200 &&
+          data['message'] == "DELETE SUCCESSFULLY") {
+        customSnackBar(
+            context, "DELETE SUCCESSFULLY", Colors.green);
+        return true;
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+          return false;
+        }
+        if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }
+       else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -135,7 +186,7 @@ class Network {
         List data = json.decode(response.body);
         log(data.toString());
         return data.map((e) => Pass.fromJson(e)).toList();
-      } else {
+      } else {      
         log(response.body);
         customSnackBar(context, "ERROR", Colors.red);
         return [];

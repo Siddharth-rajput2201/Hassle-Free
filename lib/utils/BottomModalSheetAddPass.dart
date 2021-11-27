@@ -25,6 +25,7 @@ class _BottomModalSheetAddPassState extends State<BottomModalSheetAddPass> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     Future  _validateAddPass() async
     {
       if(formGlobalKey.currentState!.validate()==true)
@@ -34,6 +35,7 @@ class _BottomModalSheetAddPassState extends State<BottomModalSheetAddPass> {
         });
       }
     }
+    
     return SingleChildScrollView(
       child: Form(
         key: formGlobalKey,
@@ -138,12 +140,14 @@ class _BottomModalSheetAddPassState extends State<BottomModalSheetAddPass> {
                       ? ElevatedButton(
                           onPressed: () async {
                             setState(() {
+                              _appnameEnabled = false;
                               _usernameEnabled = false;
                               _passwordEnabled = false;
                               _addButtonEnabled = false;
                             });
                             await _validateAddPass();
                             setState(() {
+                              _appnameEnabled = true;
                               _usernameEnabled = true;
                               _passwordEnabled = true;
                               _addButtonEnabled = true;

@@ -5,6 +5,7 @@ import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/Login.dart';
 import 'package:hassle_free/utils/BottomModalSheetAddPass.dart';
+import 'package:hassle_free/utils/BottomModalSheetDelete.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -47,17 +48,19 @@ class _UserPassState extends State<UserPass> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
+          onPressed: () async {
+            await showModalBottomSheet(
+                isScrollControlled: true,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25))),
                 context: context,
                 builder: (context) {
-                  
                   return BottomModalSheetAddPass();
+                });
+                setState(() {
+                  
                 });
           },
           child: Icon(Icons.add),
@@ -113,6 +116,9 @@ class _UserPassState extends State<UserPass> {
                                             fontSize: height * 0.040,
                                           ),
                                         ),
+                                        SizedBox(
+                                          height: height * 0.01,
+                                        ),
                                         Row(
                                           children: [
                                             Text(
@@ -122,21 +128,25 @@ class _UserPassState extends State<UserPass> {
                                                 fontSize: height * 0.030,
                                               ),
                                             ),
-                                            IconButton(
-                                              onPressed: () async {
-                                                ClipboardData data =
-                                                    ClipboardData(
-                                                        text: passData[index]
-                                                            .username);
-                                                await Clipboard.setData(data);
-                                                customSnackBar(
-                                                    context,
-                                                    "COPIED TO CLIPBOARD",
-                                                    Colors.green);
-                                              },
-                                              icon: Icon(
-                                                Icons.copy_outlined,
-                                                color: Colors.white,
+                                            Material(
+                                              type: MaterialType.transparency,
+                                              child: IconButton(
+                                                splashRadius: 23,
+                                                onPressed: () async {
+                                                  ClipboardData data =
+                                                      ClipboardData(
+                                                          text: passData[index]
+                                                              .username);
+                                                  await Clipboard.setData(data);
+                                                  customSnackBar(
+                                                      context,
+                                                      "COPIED TO CLIPBOARD",
+                                                      Colors.green);
+                                                },
+                                                icon: Icon(
+                                                  Icons.copy_outlined,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             )
                                           ],
@@ -156,26 +166,28 @@ class _UserPassState extends State<UserPass> {
                                                       fontSize: height * 0.030,
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                    width: width * 0.025,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () async {
-                                                      ClipboardData data =
-                                                          ClipboardData(
-                                                              text: snapshot
-                                                                  .data
-                                                                  .toString());
-                                                      await Clipboard.setData(
-                                                          data);
-                                                      customSnackBar(
-                                                          context,
-                                                          "COPIED TO CLIPBOARD",
-                                                          Colors.green);
-                                                    },
-                                                    child: Icon(
-                                                      Icons.copy_outlined,
-                                                      color: Colors.white,
+                                                  Material(
+                                                    type: MaterialType
+                                                        .transparency,
+                                                    child: IconButton(
+                                                      splashRadius: 23,
+                                                      onPressed: () async {
+                                                        ClipboardData data =
+                                                            ClipboardData(
+                                                                text: snapshot
+                                                                    .data
+                                                                    .toString());
+                                                        await Clipboard.setData(
+                                                            data);
+                                                        customSnackBar(
+                                                            context,
+                                                            "COPIED TO CLIPBOARD",
+                                                            Colors.green);
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.copy_outlined,
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   )
                                                 ],
@@ -201,13 +213,54 @@ class _UserPassState extends State<UserPass> {
                                     ),
                                     Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.edit,
-                                            color: Colors.white,
+                                        Material(
+                                          type: MaterialType.transparency,
+                                          child: InkWell(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                            onTap: () {},
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Icon(
+                                                Icons.edit,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Material(
+                                          type: MaterialType.transparency,
+                                          child: InkWell(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(50)),
+                                            onTap: () async {
+                                              await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(25),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      25))),
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return BottomModalSheetDelete(appName: passData[index].appName,passwordId: passData[index].passwordId.toString(),);
+                                                  });
+                                                   setState((){});
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Icon(
+                                                Icons.delete_outline,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],

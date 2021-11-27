@@ -10,6 +10,7 @@ class Api {
   static String retrieve = domain + '/retrieve';
   static String decrypt = domain + '/decrypt';
 
-  //add update
+  //add update delete
   static String add = domain + '/insertpassword';
+  static String delete = domain + '/delete';
 }
