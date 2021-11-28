@@ -343,4 +343,38 @@ class Network {
       return "";
     }
   }
+
+  static Future<bool> auth(BuildContext context) async {
+    var url = Uri.parse(Api.auth);
+    String token = await Storage.getToken();
+    Map body = {  
+    'JWT_TOKEN': token,
+   };
+    try {
+      final response = await Http.post(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200 &&
+          data['message'] == "AUTHENTICATED") {
+        // customSnackBar(
+        //     context, "UPDATED SUCCESSFULLY", Colors.green);
+        return true;
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          return false;
+        }
+        if (data['message'] == "MISSING TOKEN") {
+          return false;
+        }
+       else {
+          log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+          return false;
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+      return false;
+    }
+  }
 }

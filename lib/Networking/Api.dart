@@ -5,6 +5,7 @@ class Api {
   //authentication
   static String login = domain + '/login';
   static String register = domain + '/register';
+  static String auth = domain + '/auth';
 
   //data
   static String retrieve = domain + '/retrieve';
