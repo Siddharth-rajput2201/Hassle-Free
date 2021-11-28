@@ -20,9 +20,13 @@ class _BottomModalSheetDeleteState extends State<BottomModalSheetDelete> {
     double height = MediaQuery.of(context).size.height;
 
     Future _validateDeletePass(String passwordid) async {
-      await Network.deletepass(passwordid.trim(), context).whenComplete(() {
+      if(await Network.deletepass(passwordid.trim(), context))
+      {
         Navigator.pop(context);
-      });
+      }
+      else{
+        Navigator.pop(context);
+      }
     }
 
     return SizedBox(

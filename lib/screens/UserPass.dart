@@ -6,6 +6,7 @@ import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/Login.dart';
 import 'package:hassle_free/utils/BottomModalSheetAddPass.dart';
 import 'package:hassle_free/utils/BottomModalSheetDelete.dart';
+import 'package:hassle_free/utils/BottomModalSheetEdit.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -59,9 +60,7 @@ class _UserPassState extends State<UserPass> {
                 builder: (context) {
                   return BottomModalSheetAddPass();
                 });
-                setState(() {
-                  
-                });
+            setState(() {});
           },
           child: Icon(Icons.add),
           backgroundColor:
@@ -220,7 +219,25 @@ class _UserPassState extends State<UserPass> {
                                           child: InkWell(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(50)),
-                                            onTap: () {},
+                                            onTap: () async {
+                                              await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(25),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      25))),
+                                                  context: context,
+                                                  builder: (builder) {
+                                                    return BottomModalSheetEdit(appname: passData[index].appName,passwordId: passData[index].passwordId.toString());
+                                                  });
+                                                  setState(() {
+                                                    
+                                                  });
+                                            },
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(15.0),
@@ -249,9 +266,16 @@ class _UserPassState extends State<UserPass> {
                                                                       25))),
                                                   context: context,
                                                   builder: (context) {
-                                                    return BottomModalSheetDelete(appName: passData[index].appName,passwordId: passData[index].passwordId.toString(),);
+                                                    return BottomModalSheetDelete(
+                                                      appName: passData[index]
+                                                          .appName,
+                                                      passwordId:
+                                                          passData[index]
+                                                              .passwordId
+                                                              .toString(),
+                                                    );
                                                   });
-                                                   setState((){});
+                                              setState(() {});
                                             },
                                             child: Padding(
                                               padding:

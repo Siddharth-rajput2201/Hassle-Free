@@ -176,6 +176,123 @@ class Network {
     }
   }
 
+     static Future<bool> updateappname(
+    String passwordid,String updateappname,BuildContext context) async {
+    var url = Uri.parse(Api.updateappname);
+    String token = await Storage.getToken();
+    Map body = {
+    'PASSWORD_ID': passwordid ,
+    'JWT_TOKEN': token,
+    'CHANGE_APPNAME' : updateappname
+     };
+    try {
+      final response = await Http.put(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200 &&
+          data['message'] == "UPDATED SUCCESSFULLY") {
+        return true;
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+          return false;
+        }
+        if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }
+       else {
+          log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+          return false;
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+      return false;
+    }
+  }
+
+   static Future<bool> updateappusername(
+    String passwordid,String updateappusername,BuildContext context) async {
+    var url = Uri.parse(Api.updateappusername);
+    String token = await Storage.getToken();
+    Map body = {
+    'PASSWORD_ID': passwordid ,
+    'JWT_TOKEN': token,
+    'CHANGE_APPUSERNAME' : updateappusername
+     };
+    try {
+      final response = await Http.put(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200 &&
+          data['message'] == "UPDATED SUCCESSFULLY") {
+        // customSnackBar(
+        //     context, "UPDATED SUCCESSFULLY", Colors.green);
+        return true;
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+          return false;
+        }
+        if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }
+       else {
+          log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+          return false;
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> updatepassword(
+    String passwordid,String updatepassword,BuildContext context) async {
+    var url = Uri.parse(Api.updatepassword);
+    String token = await Storage.getToken();
+    String password = await Storage.getPassword();
+    Map body = {
+    'PASSWORD_ID': passwordid ,
+    'JWT_TOKEN': token,
+    'USER_PASSWORD' : password,
+    'CHANGE_PASSWORD' : updatepassword
+     };
+    try {
+      final response = await Http.put(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200 &&
+          data['message'] == "UPDATED SUCCESSFULLY") {
+        // customSnackBar(
+        //     context, "UPDATED SUCCESSFULLY", Colors.green);
+        return true;
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+          return false;
+        }
+        if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }
+       else {
+          log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+          return false;
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+      return false;
+    }
+  }
+
   static Future<List<Pass>> retrieve(BuildContext context) async {
     var url = Uri.parse(Api.retrieve);
     String token = await Storage.getToken();

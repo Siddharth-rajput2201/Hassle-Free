@@ -13,4 +13,7 @@ class Api {
   //add update delete
   static String add = domain + '/insertpassword';
   static String delete = domain + '/delete';
+  static String updatepassword = domain + '/updatepassword'; 
+  static String updateappname = domain + '/updateappname';
+  static String updateappusername = domain + '/updateappusername';
 }
