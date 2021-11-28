@@ -20,11 +20,9 @@ class _BottomModalSheetDeleteState extends State<BottomModalSheetDelete> {
     double height = MediaQuery.of(context).size.height;
 
     Future _validateDeletePass(String passwordid) async {
-      if(await Network.deletepass(passwordid.trim(), context))
-      {
+      if (await Network.deletepass(passwordid.trim(), context)) {
         Navigator.pop(context);
-      }
-      else{
+      } else {
         Navigator.pop(context);
       }
     }
@@ -37,7 +35,7 @@ class _BottomModalSheetDeleteState extends State<BottomModalSheetDelete> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Are you sure you want too delete ${widget.appName} password?",
+              "Are you sure you want to delete ${widget.appName} password?",
               style: TextStyle(
                   fontSize: height * 0.035,
                   fontWeight: FontWeight.w600,

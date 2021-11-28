@@ -57,7 +57,6 @@ flutter:
   assets:
      - assets/Hassle_Free_Logo.png
      - assets/Hassle_Free_Logo_Animate.gif
-     - assets/Hassle_Free_Logo(No Text).gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
