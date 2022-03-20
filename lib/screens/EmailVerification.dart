@@ -106,8 +106,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                           ],
                         ),
                         child: Center(
-                          child: 
-                          Text(
+                          child: Text(
                             "RESEND EMAIL",
                             style: TextStyle(
                                 fontSize: height * 0.025,
@@ -116,48 +115,47 @@ class _EmailVerificationState extends State<EmailVerification> {
                         ),
                       ),
                     ),
-                      GestureDetector(
-                      onTap: (){
-                         Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Login()),);
-                        // setState(() {
-                        //   _usernameEnabled = false;
-                        //   _passwordEnabled = false;
-                        //   _signUpButtonEnabled = false;
-                        // });
-                        // await _validatelogin();
-                        // setState(() {
-                        //   _usernameEnabled = true;
-                        //   _passwordEnabled = true;
-                        //   _signUpButtonEnabled = true;
-                        // });
-                      },
-                      child: Container(
-                        height: height * 0.085,
-                        width: width * 0.40,
-                        decoration: BoxDecoration(
-                          color: ThemeColors.kBackGroundColor,
+                    Container(
+                      height: height * 0.085,
+                      width: width * 0.40,
+                      decoration: BoxDecoration(
+                        color: ThemeColors.kBackGroundColor,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: ThemeColors.kDarkShadowColor,
+                            offset: Offset(4, 4),
+                            blurRadius: 15,
+                            spreadRadius: 1,
+                          ),
+                          BoxShadow(
+                            color: ThemeColors.kLightShadowColor,
+                            offset: Offset(-4, -4),
+                            blurRadius: 15,
+                            spreadRadius: 1,
+                          )
+                        ],
+                      ),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(30),
+                        color: ThemeColors.kBackGroundColor,
+                        child: InkWell(
+                          splashColor: Colors.blue[200],
+                          highlightColor: Colors.transparent,
                           borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ThemeColors.kDarkShadowColor,
-                              offset: Offset(4, 4),
-                              blurRadius: 15,
-                              spreadRadius: 1,
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Login()),
+                            );
+                          },
+                          child: Center(
+                            child: Text(
+                              "GO BACK",
+                              style: TextStyle(
+                                  fontSize: height * 0.025,
+                                  color: ThemeColors.kTextColor),
                             ),
-                            BoxShadow(
-                              color: ThemeColors.kLightShadowColor,
-                              offset: Offset(-4, -4),
-                              blurRadius: 15,
-                              spreadRadius: 1,
-                            )
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            "GO BACK",
-                            style: TextStyle(
-                                fontSize: height * 0.025,
-                                color: ThemeColors.kTextColor),
                           ),
                         ),
                       ),
