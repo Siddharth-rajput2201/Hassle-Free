@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/Api.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
+import 'package:hassle_free/screens/EmailVerification.dart';
 import 'package:hassle_free/screens/Login.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/Storage.dart';
@@ -41,6 +42,11 @@ class Network {
          if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
           return false;
+        }
+        if (data['message'] == "ACCOUNT NOT VERIFIED") {
+           Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EmailVerification()),);
+          customSnackBar(context, "ACCOUNT NOT VERIFIED", Colors.red);
+          return false;
         }else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
@@ -55,9 +61,9 @@ class Network {
   }
 
   static Future<bool> register(
-    String username, String password, BuildContext context) async {
+    String username, String password, String emailid ,BuildContext context) async {
     var url = Uri.parse(Api.register);
-    Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
+    Map body = {'USER_NAME': username, 'USER_PASSWORD': password ,'EMAIL_ID':emailid};
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);

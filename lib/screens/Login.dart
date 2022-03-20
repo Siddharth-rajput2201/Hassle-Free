@@ -134,13 +134,15 @@ class _LoginState extends State<Login> {
                                       decoration: InputDecoration(
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: ThemeColors.kBackGroundColor),
+                                              color:
+                                                  ThemeColors.kBackGroundColor),
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: ThemeColors.kBackGroundColor),
+                                              color:
+                                                  ThemeColors.kBackGroundColor),
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
@@ -190,13 +192,15 @@ class _LoginState extends State<Login> {
                                       decoration: InputDecoration(
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: ThemeColors.kBackGroundColor),
+                                              color:
+                                                  ThemeColors.kBackGroundColor),
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: ThemeColors.kBackGroundColor),
+                                              color:
+                                                  ThemeColors.kBackGroundColor),
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
@@ -214,7 +218,8 @@ class _LoginState extends State<Login> {
                                               : Icons.visibility_off),
                                           onTap: () {
                                             setState(() {
-                                              if (_showPasswordEnabled == true) {
+                                              if (_showPasswordEnabled ==
+                                                  true) {
                                                 _showPasswordEnabled = false;
                                               } else {
                                                 _showPasswordEnabled = true;
@@ -235,64 +240,7 @@ class _LoginState extends State<Login> {
                                 ],
                               ),
                             ),
-                            // _signUpButtonEnabled
-                            //     ? ElevatedButton(
-                            //         onPressed: () async {
-                            //           setState(() {
-                            //             _usernameEnabled = false;
-                            //             _passwordEnabled = false;
-                            //             _signUpButtonEnabled = false;
-                            //           });
-                            //           await _validatelogin();
-                            //           setState(() {
-                            //             _usernameEnabled = true;
-                            //             _passwordEnabled = true;
-                            //             _signUpButtonEnabled = true;
-                            //           });
-                            //         },
-                            //         child: Text(
-                            //           "LOGIN",
-                            //           style:
-                            //               TextStyle(fontSize: height * 0.025),
-                            //         ),
-                            //         style: ButtonStyle(
-                            //           fixedSize:
-                            //               MaterialStateProperty.all<Size>(
-                            //                   Size(width, height * 0.085)),
-                            //           backgroundColor:
-                            //               MaterialStateProperty.all<Color>(
-                            //                   Color(0xffe4717d)),
-                            //           shape: MaterialStateProperty.all<
-                            //               RoundedRectangleBorder>(
-                            //             RoundedRectangleBorder(
-                            //               borderRadius:
-                            //                   BorderRadius.circular(25.0),
-                            //               // side: BorderSide(color: Colors.red),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       )
-                            //     : ElevatedButton(
-                            //         onPressed: null,
-                            //         child: Text(
-                            //           "LOGIN",
-                            //           style:
-                            //               TextStyle(fontSize: height * 0.025),
-                            //         ),
-                            //         style: ButtonStyle(
-                            //           fixedSize:
-                            //               MaterialStateProperty.all<Size>(
-                            //                   Size(width, height * 0.085)),
-                            //           shape: MaterialStateProperty.all<
-                            //               RoundedRectangleBorder>(
-                            //             RoundedRectangleBorder(
-                            //               borderRadius:
-                            //                   BorderRadius.circular(25.0),
-                            //               // side: BorderSide(color: Colors.red),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ),
+                            
                             _signUpButtonEnabled
                                 ? GestureDetector(
                                     onTap: () async {
@@ -334,87 +282,64 @@ class _LoginState extends State<Login> {
                                             spreadRadius: 1,
                                           ),
                                           BoxShadow(
-                                            color:ThemeColors.kLightShadowColor,
+                                            color:
+                                                ThemeColors.kLightShadowColor,
                                             offset: Offset(-4, -4),
                                             blurRadius: 15,
                                             spreadRadius: 1,
                                           )
                                         ],
                                       ),
-                                      child: Center(child: Text("LOGIN")),
+                                      child: Center(
+                                          child: Text(
+                                        "LOGIN",
+                                        style: TextStyle(
+                                            fontSize: height * 0.025,
+                                            color: ThemeColors.kTextColor),
+                                      )),
                                     ),
                                   )
-                                : GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        _usernameEnabled = false;
-                                        _passwordEnabled = false;
-                                        _signUpButtonEnabled = false;
-                                      });
-                                      await _validatelogin();
-                                      setState(() {
-                                        _usernameEnabled = true;
-                                        _passwordEnabled = true;
-                                        _signUpButtonEnabled = true;
-                                      });
-                                    },
-                                    child: Container(
-                                      // duration: Duration(milliseconds: 500),
-                                      height: height * 0.085,
-                                      width: width,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffdee8fc),
-                                        borderRadius: BorderRadius.circular(30),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            ThemeColors.kLinearFirstGradient,
-                                            ThemeColors.kLinearSecondGradient,
-                                            // Color(0xFFf7f5ec)
-                                          ],
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          stops: [0.0, 0.4],
-                                          tileMode: TileMode.clamp,
+                                : Container(
+                                    // duration: Duration(milliseconds: 500),
+                                    height: height * 0.085,
+                                    width: width,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffdee8fc),
+                                      borderRadius: BorderRadius.circular(30),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          ThemeColors.kLinearFirstGradient,
+                                          ThemeColors.kLinearSecondGradient,
+                                          // Color(0xFFf7f5ec)
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: [0.0, 0.4],
+                                        tileMode: TileMode.clamp,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ThemeColors.kDarkShadowColor,
+                                          offset: Offset(4, 4),
+                                          blurRadius: 15,
+                                          spreadRadius: 1,
                                         ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ThemeColors.kDarkShadowColor,
-                                            offset: Offset(4, 4),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                          BoxShadow(
-                                            color: ThemeColors.kLightShadowColor,
-                                            offset: Offset(-4, -4),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          )
-                                        ],
-                                      ),
-                                      child: Center(child: Text("LOGIN",style: TextStyle(fontSize: height * 0.025),)),
+                                        BoxShadow(
+                                          color: ThemeColors.kLightShadowColor,
+                                          offset: Offset(-4, -4),
+                                          blurRadius: 15,
+                                          spreadRadius: 1,
+                                        )
+                                      ],
                                     ),
+                                    child: Center(
+                                        child: Text(
+                                      "LOGIN",
+                                      style: TextStyle(
+                                          fontSize: height * 0.025,
+                                          color: ThemeColors.kTextColor),
+                                    )),
                                   )
-                            // ElevatedButton(
-                            //         onPressed: null,
-                            //         child: Text(
-                            //           "LOGIN",
-                            //           style:
-                            //               TextStyle(fontSize: height * 0.025),
-                            //         ),
-                            //         style: ButtonStyle(
-                            //           fixedSize:
-                            //               MaterialStateProperty.all<Size>(
-                            //                   Size(width, height * 0.085)),
-                            //           shape: MaterialStateProperty.all<
-                            //               RoundedRectangleBorder>(
-                            //             RoundedRectangleBorder(
-                            //               borderRadius:
-                            //                   BorderRadius.circular(25.0),
-                            //               // side: BorderSide(color: Colors.red),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       )
                           ],
                         ),
                       ),
@@ -423,7 +348,8 @@ class _LoginState extends State<Login> {
                           children: [
                             TextSpan(
                                 text: "NOT REGISTERED ?",
-                                style: TextStyle(color: ThemeColors.kTextColor)),
+                                style:
+                                    TextStyle(color: ThemeColors.kTextColor)),
                             TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Navigator.pushReplacement(

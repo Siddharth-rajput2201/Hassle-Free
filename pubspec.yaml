@@ -33,6 +33,7 @@ dependencies:
   shimmer: ^2.0.0
   local_auth: ^1.1.11
   permission_handler: ^9.2.0
+  flutter_svg: ^1.0.3
   
 dev_dependencies:
   flutter_test:
@@ -59,6 +60,7 @@ flutter:
   assets:
      - assets/Hassle_Free_Logo.png
      - assets/Hassle_Free_Logo_Animate.gif
+     - assets/email.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
