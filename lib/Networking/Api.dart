@@ -1,20 +1,27 @@
-class Api {
+class Api { 
   static String domain = "https://hassle-free.herokuapp.com";
-  // static String domain = "http://192.168.1.26:5000";
+  // static String domain = "http://192.168.0.104:5000";
 
-  //authentication
-  static String login = domain + '/login';
-  static String register = domain + '/register';
-  static String auth = domain + '/auth';
+  //authentication auth / endpoint
+  static String login = domain + '/auth/login';
+  static String register = domain + '/auth/register';
+  static String auth = domain + '/auth/verify';
 
-  //data
-  static String retrieve = domain + '/retrieve';
-  static String decrypt = domain + '/decrypt';
+  //data data / endpoint
+  static String retrieve = domain + '/data/retrieve';
+  static String decrypt = domain + '/data/decrypt';
 
   //add update delete
-  static String add = domain + '/insertpassword';
-  static String delete = domain + '/delete';
-  static String updatepassword = domain + '/updatepassword'; 
-  static String updateappname = domain + '/updateappname';
-  static String updateappusername = domain + '/updateappusername';
+
+  // insert insert / endpoint
+  static String add = domain + '/insert/insertpass';
+
+  // delete delete / endpoint
+  static String deletepass = domain + '/delete/deletepass';
+  static String deleteaccount = domain + '/delete/delaccemail';
+
+  // update update /  endpoint
+  static String updatepassword = domain + '/update/updatepass'; 
+  static String updateappname = domain + '/update/updateappname';
+  static String updateappusername = domain + '/update/updateappusername';
 }

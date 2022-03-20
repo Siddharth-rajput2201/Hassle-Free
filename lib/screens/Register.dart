@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,13 +44,13 @@ class _RegisterState extends State<Register> {
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
       child: Scaffold(
-        body: SafeArea(
+        body: 
+        SafeArea(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -233,6 +232,17 @@ class _RegisterState extends State<Register> {
                                       ),
                                     ),
                                   ),
+                            //       InkWell(
+                            //   onTap: (){},
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     children: [
+                            //     Icon(Icons.fingerprint,size: height * 0.05),
+                            //     Text("Enable Fingerprint",
+                            //         style: TextStyle(fontSize: height * 0.025)),
+                            //   ]),
+                            // )
                           ],
                         ),
                       ),

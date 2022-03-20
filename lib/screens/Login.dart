@@ -4,10 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/UserPass.dart';
 import 'package:hassle_free/screens/Register.dart';
+import 'package:hassle_free/utils/ThemeColors.dart';
+import 'package:local_auth/local_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -15,6 +16,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  LocalAuthentication authentication = LocalAuthentication();
   bool _usernameEnabled = true;
   bool _passwordEnabled = true;
   bool _signUpButtonEnabled = true;
@@ -36,6 +38,7 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
+
     super.initState();
   }
 
@@ -53,6 +56,7 @@ class _LoginState extends State<Login> {
         }
       },
       child: Scaffold(
+        backgroundColor: ThemeColors.kBackGroundColor,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -65,81 +69,233 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        height: height * 0.45,
+                        height: height * 0.525,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    fontSize: height * 0.05,
-                                    fontWeight: FontWeight.w900,
-                                    color: Color(0xFF747474)),
+                            Container(
+                              // color: Colors.pink[300],
+                              padding: EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                                bottom: 7,
+                              ),
+                              height: height * 0.35,
+                              decoration: BoxDecoration(
+                                  color: ThemeColors.kBackGroundColor,
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: ThemeColors.kDarkShadowColor,
+                                      offset: Offset(5, 5),
+                                      blurRadius: 15,
+                                      spreadRadius: 1,
+                                    ),
+                                    BoxShadow(
+                                      color: ThemeColors.kLightShadowColor,
+                                      offset: Offset(-5, -5),
+                                      blurRadius: 15,
+                                      spreadRadius: 1,
+                                    )
+                                  ]),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(
+                                          fontSize: height * 0.05,
+                                          fontWeight: FontWeight.w900,
+                                          color: Color(0xFF747474)),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: ShapeDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          ThemeColors.kLinearFirstGradient,
+                                          ThemeColors.kLinearSecondGradient,
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: [0.0, 0.4],
+                                        tileMode: TileMode.clamp,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(25.0)),
+                                      ),
+                                    ),
+                                    child: TextFormField(
+                                      enabled: _usernameEnabled,
+                                      controller: userNameController,
+                                      decoration: InputDecoration(
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: ThemeColors.kBackGroundColor),
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                        ),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: ThemeColors.kBackGroundColor),
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                        ),
+                                        prefixIcon:
+                                            Icon(Icons.person_outline_outlined),
+                                        hintText: "USERNAME",
+                                        hintStyle:
+                                            TextStyle(fontSize: height * 0.025),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                        ),
+                                      ),
+                                      validator: (valUsername) {
+                                        if (valUsername!.isEmpty) {
+                                          return "USERNAME CANNOT BE EMPTY";
+                                        } else {
+                                          // setState(() {
+                                          //   _loginButtonEnabled = true;
+                                          // });
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: ShapeDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          ThemeColors.kLinearFirstGradient,
+                                          ThemeColors.kLinearSecondGradient,
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: [0.0, 0.4],
+                                        tileMode: TileMode.clamp,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(25.0)),
+                                      ),
+                                    ),
+                                    child: TextFormField(
+                                      enabled: _passwordEnabled,
+                                      controller: passwordController,
+                                      obscureText: _showPasswordEnabled,
+                                      decoration: InputDecoration(
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: ThemeColors.kBackGroundColor),
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                        ),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: ThemeColors.kBackGroundColor),
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                        ),
+                                        hintText: "PASSWORD",
+                                        hintStyle:
+                                            TextStyle(fontSize: height * 0.025),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                        ),
+                                        prefixIcon: Icon(Icons.lock),
+                                        suffixIcon: InkWell(
+                                          child: Icon(_showPasswordEnabled
+                                              ? Icons.visibility
+                                              : Icons.visibility_off),
+                                          onTap: () {
+                                            setState(() {
+                                              if (_showPasswordEnabled == true) {
+                                                _showPasswordEnabled = false;
+                                              } else {
+                                                _showPasswordEnabled = true;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      validator: (valPassword) {
+                                        if (valPassword!.isEmpty) {
+                                          return "PASSWORD CANNOT BE EMPTY";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            TextFormField(
-                              enabled: _usernameEnabled,
-                              controller: userNameController,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.person_outline_outlined),
-                                hintText: "USERNAME",
-                                hintStyle: TextStyle(fontSize: height * 0.025),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                              ),
-                              validator: (valUsername) {
-                                if (valUsername!.isEmpty) {
-                                  return "USERNAME CANNOT BE EMPTY";
-                                } else {
-                                  // setState(() {
-                                  //   _loginButtonEnabled = true;
-                                  // });
-                                  return null;
-                                }
-                              },
-                            ),
-                            TextFormField(
-                              enabled: _passwordEnabled,
-                              controller: passwordController,
-                              obscureText: _showPasswordEnabled,
-                              decoration: InputDecoration(
-                                hintText: "PASSWORD",
-                                hintStyle: TextStyle(fontSize: height * 0.025),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                prefixIcon: Icon(Icons.lock),
-                                suffixIcon: InkWell(
-                                  child: Icon(_showPasswordEnabled
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onTap: () {
-                                    setState(() {
-                                      if (_showPasswordEnabled == true) {
-                                        _showPasswordEnabled = false;
-                                      } else {
-                                        _showPasswordEnabled = true;
-                                      }
-                                    });
-                                  },
-                                ),
-                              ),
-                              validator: (valPassword) {
-                                if (valPassword!.isEmpty) {
-                                  return "PASSWORD CANNOT BE EMPTY";
-                                } else {
-                                  // setState(() {
-                                  //   _loginButtonEnabled = true;
-                                  // });
-                                  return null;
-                                }
-                              },
-                            ),
+                            // _signUpButtonEnabled
+                            //     ? ElevatedButton(
+                            //         onPressed: () async {
+                            //           setState(() {
+                            //             _usernameEnabled = false;
+                            //             _passwordEnabled = false;
+                            //             _signUpButtonEnabled = false;
+                            //           });
+                            //           await _validatelogin();
+                            //           setState(() {
+                            //             _usernameEnabled = true;
+                            //             _passwordEnabled = true;
+                            //             _signUpButtonEnabled = true;
+                            //           });
+                            //         },
+                            //         child: Text(
+                            //           "LOGIN",
+                            //           style:
+                            //               TextStyle(fontSize: height * 0.025),
+                            //         ),
+                            //         style: ButtonStyle(
+                            //           fixedSize:
+                            //               MaterialStateProperty.all<Size>(
+                            //                   Size(width, height * 0.085)),
+                            //           backgroundColor:
+                            //               MaterialStateProperty.all<Color>(
+                            //                   Color(0xffe4717d)),
+                            //           shape: MaterialStateProperty.all<
+                            //               RoundedRectangleBorder>(
+                            //             RoundedRectangleBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(25.0),
+                            //               // side: BorderSide(color: Colors.red),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       )
+                            //     : ElevatedButton(
+                            //         onPressed: null,
+                            //         child: Text(
+                            //           "LOGIN",
+                            //           style:
+                            //               TextStyle(fontSize: height * 0.025),
+                            //         ),
+                            //         style: ButtonStyle(
+                            //           fixedSize:
+                            //               MaterialStateProperty.all<Size>(
+                            //                   Size(width, height * 0.085)),
+                            //           shape: MaterialStateProperty.all<
+                            //               RoundedRectangleBorder>(
+                            //             RoundedRectangleBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(25.0),
+                            //               // side: BorderSide(color: Colors.red),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
                             _signUpButtonEnabled
-                                ? ElevatedButton(
-                                    onPressed: () async {
+                                ? GestureDetector(
+                                    onTap: () async {
                                       setState(() {
                                         _usernameEnabled = false;
                                         _passwordEnabled = false;
@@ -152,49 +308,113 @@ class _LoginState extends State<Login> {
                                         _signUpButtonEnabled = true;
                                       });
                                     },
-                                    child: Text(
-                                      "LOGIN",
-                                      style:
-                                          TextStyle(fontSize: height * 0.025),
-                                    ),
-                                    style: ButtonStyle(
-                                      fixedSize:
-                                          MaterialStateProperty.all<Size>(
-                                              Size(width, height * 0.085)),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Color(0xffe4717d)),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          // side: BorderSide(color: Colors.red),
-                                        ),
+                                    child: Container(
+                                      // duration: Duration(milliseconds: 500),
+                                      height: height * 0.085,
+                                      width: width,
+                                      decoration: BoxDecoration(
+                                        color: ThemeColors.kBackGroundColor,
+                                        borderRadius: BorderRadius.circular(30),
+                                        // gradient: LinearGradient(
+                                        //   colors: [
+                                        //     Color.fromARGB(255, 189, 204, 230),
+                                        //     Color.fromARGB(255, 214, 230, 255)
+                                        //     // Color(0xFFf7f5ec)
+                                        //   ],
+                                        //   begin: Alignment.topCenter,
+                                        //   end: Alignment.bottomCenter,
+                                        //   stops: [0.0, 0.4],
+                                        //   tileMode: TileMode.clamp,
+                                        // ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: ThemeColors.kDarkShadowColor,
+                                            offset: Offset(4, 4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          ),
+                                          BoxShadow(
+                                            color:ThemeColors.kLightShadowColor,
+                                            offset: Offset(-4, -4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          )
+                                        ],
                                       ),
+                                      child: Center(child: Text("LOGIN")),
                                     ),
                                   )
-                                : ElevatedButton(
-                                    onPressed: null,
-                                    child: Text(
-                                      "LOGIN",
-                                      style:
-                                          TextStyle(fontSize: height * 0.025),
-                                    ),
-                                    style: ButtonStyle(
-                                      fixedSize:
-                                          MaterialStateProperty.all<Size>(
-                                              Size(width, height * 0.085)),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          // side: BorderSide(color: Colors.red),
+                                : GestureDetector(
+                                    onTap: () async {
+                                      setState(() {
+                                        _usernameEnabled = false;
+                                        _passwordEnabled = false;
+                                        _signUpButtonEnabled = false;
+                                      });
+                                      await _validatelogin();
+                                      setState(() {
+                                        _usernameEnabled = true;
+                                        _passwordEnabled = true;
+                                        _signUpButtonEnabled = true;
+                                      });
+                                    },
+                                    child: Container(
+                                      // duration: Duration(milliseconds: 500),
+                                      height: height * 0.085,
+                                      width: width,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffdee8fc),
+                                        borderRadius: BorderRadius.circular(30),
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            ThemeColors.kLinearFirstGradient,
+                                            ThemeColors.kLinearSecondGradient,
+                                            // Color(0xFFf7f5ec)
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [0.0, 0.4],
+                                          tileMode: TileMode.clamp,
                                         ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: ThemeColors.kDarkShadowColor,
+                                            offset: Offset(4, 4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          ),
+                                          BoxShadow(
+                                            color: ThemeColors.kLightShadowColor,
+                                            offset: Offset(-4, -4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          )
+                                        ],
                                       ),
+                                      child: Center(child: Text("LOGIN",style: TextStyle(fontSize: height * 0.025),)),
                                     ),
-                                  ),
+                                  )
+                            // ElevatedButton(
+                            //         onPressed: null,
+                            //         child: Text(
+                            //           "LOGIN",
+                            //           style:
+                            //               TextStyle(fontSize: height * 0.025),
+                            //         ),
+                            //         style: ButtonStyle(
+                            //           fixedSize:
+                            //               MaterialStateProperty.all<Size>(
+                            //                   Size(width, height * 0.085)),
+                            //           shape: MaterialStateProperty.all<
+                            //               RoundedRectangleBorder>(
+                            //             RoundedRectangleBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(25.0),
+                            //               // side: BorderSide(color: Colors.red),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       )
                           ],
                         ),
                       ),
@@ -203,7 +423,7 @@ class _LoginState extends State<Login> {
                           children: [
                             TextSpan(
                                 text: "NOT REGISTERED ?",
-                                style: TextStyle(color: Color(0xFF747474))),
+                                style: TextStyle(color: ThemeColors.kTextColor)),
                             TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Navigator.pushReplacement(

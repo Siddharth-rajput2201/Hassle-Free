@@ -1,10 +1,10 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/Api.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
+import 'package:hassle_free/screens/Login.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/Storage.dart';
 import 'package:http/http.dart' as Http;
@@ -61,8 +61,9 @@ class Network {
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
-      if (response.statusCode == 200 &&
+      if (response.statusCode == 201 &&
           data['message'] == "REGISTERED SUCCESSFULLY") {
+            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Login()),);
         customSnackBar(
             context, "REGISTERED SUCCESSFULLY. KINDLY LOGIN", Colors.green);
         return true;
@@ -81,6 +82,22 @@ class Network {
         } 
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
+          return false;
+        }
+        if (data['message'] == "PASSWORD MUST CONTAIN A DIGIT") {
+          customSnackBar(context, "PASSWORD MUST CONTAIN A DIGIT", Colors.red);
+          return false;
+        }
+        if (data['message'] == "PASSWORD MUST CONTAIN A UPPER CHARACTER") {
+          customSnackBar(context, "PASSWORD MUST CONTAIN A UPPER CHARACTER", Colors.red);
+          return false;
+        }
+        if (data['message'] == "PASSWORD MUST CONTAIN A LOWER CHARACTER") {
+          customSnackBar(context, "PASSWORD MUST CONTAIN A LOWER CHARACTER", Colors.red);
+          return false;
+        }
+        if (data['message'] == "PASSWORD MUST CONTAIN A SPECIAL CHARATER") {
+          customSnackBar(context, "PASSWORD MUST CONTAIN A SPECIAL CHARATER", Colors.red);
           return false;
         }else {
           log(response.body);
@@ -140,7 +157,7 @@ class Network {
 
     static Future<bool> deletepass(
     String passwordid,BuildContext context) async {
-    var url = Uri.parse(Api.delete);
+    var url = Uri.parse(Api.deletepass);
     String token = await Storage.getToken();
     Map body = {
     'PASSWORD_ID': passwordid ,

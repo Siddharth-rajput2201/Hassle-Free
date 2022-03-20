@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class UserPass extends StatefulWidget {
-  const UserPass({Key? key}) : super(key: key);
+  const UserPass({ Key? key}) : super(key: key);
 
   @override
   _UserPassState createState() => _UserPassState();
