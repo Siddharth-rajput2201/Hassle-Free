@@ -24,4 +24,7 @@ class Api {
   static String updatepassword = domain + '/update/updatepass'; 
   static String updateappname = domain + '/update/updateappname';
   static String updateappusername = domain + '/update/updateappusername';
+
+  // email emailauth / endpoint
+  static String resendEmail = domain + '/emailauth/resendemail';
 }

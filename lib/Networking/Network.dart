@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
   static Future<bool> login(
-      String username, String password, BuildContext context) async {
+    String username, String password, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.login);
     Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
@@ -44,6 +44,8 @@ class Network {
           return false;
         }
         if (data['message'] == "ACCOUNT NOT VERIFIED") {
+           await prefs.setString("username", username);
+           await prefs.setString("password", password);
            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EmailVerification()),);
           customSnackBar(context, "ACCOUNT NOT VERIFIED", Colors.red);
           return false;
@@ -342,9 +344,6 @@ class Network {
     var url = Uri.parse(Api.decrypt);
     String token = await Storage.getToken();
     String apppass = await Storage.getPassword();
-    log(token);
-    log(apppass);
-    log(encryptedPass);
     Map body = {
       'JWT_TOKEN': token,
       'APP_PASS' : encryptedPass,
@@ -400,4 +399,49 @@ class Network {
       return false;
     }
   }
+
+
+
+  static Future<void> resendemail(BuildContext context) async {
+    var url = Uri.parse(Api.resendEmail);
+    String username = await Storage.getUserName();
+    String password = await Storage.getPassword();
+    Map body = {
+    'USER_NAME' : username,
+    'USER_PASSWORD' : password,
+     };
+    try {
+      final response = await Http.post(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 201 &&
+          data['message'] == "EMAIL SUCCESSFULLY SENT") {
+        customSnackBar(
+            context, "EMAIL SENT SUCCESSFULLY", Colors.green);
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+        }
+        if (data['message'] == "INVALID CREDENTIALS") {
+          customSnackBar(context, "INVALID CREDENTIALS", Colors.red);
+        }
+        if (data['message'] == "USER DOES NOT EXIST") {
+          customSnackBar(context, "NO USER FOUND", Colors.red);
+        }
+        if (data['message'] == "ACCOUNT ALREADY VERIFIED") {
+          customSnackBar(context, "ACCOUNT ALREADY VERIFIED", Colors.green);
+        }
+        if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+        }
+       else {
+          log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+    }
+  }
+
 }

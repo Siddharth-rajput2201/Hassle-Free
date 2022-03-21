@@ -265,8 +265,10 @@ class _LoginState extends State<Login> {
                                         borderRadius: BorderRadius.circular(30),
                                         // gradient: LinearGradient(
                                         //   colors: [
-                                        //     Color.fromARGB(255, 189, 204, 230),
-                                        //     Color.fromARGB(255, 214, 230, 255)
+                                        //   // Colors.blue[300]!,
+                                        //   // Colors.blue[200]!,
+                                        //     // Color.fromARGB(255, 189, 204, 230),
+                                        //     // Color.fromARGB(255, 214, 230, 255)
                                         //     // Color(0xFFf7f5ec)
                                         //   ],
                                         //   begin: Alignment.topCenter,
@@ -294,6 +296,7 @@ class _LoginState extends State<Login> {
                                           child: Text(
                                         "LOGIN",
                                         style: TextStyle(
+                                          fontWeight: FontWeight.w500,
                                             fontSize: height * 0.025,
                                             color: ThemeColors.kTextColor),
                                       )),
@@ -304,7 +307,7 @@ class _LoginState extends State<Login> {
                                     height: height * 0.085,
                                     width: width,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffdee8fc),
+                                      color: ThemeColors.kBackGroundColor,
                                       borderRadius: BorderRadius.circular(30),
                                       gradient: LinearGradient(
                                         colors: [
@@ -336,8 +339,9 @@ class _LoginState extends State<Login> {
                                         child: Text(
                                       "LOGIN",
                                       style: TextStyle(
+                                        fontWeight: FontWeight.w500,
                                           fontSize: height * 0.025,
-                                          color: ThemeColors.kTextColor),
+                                          color: Colors.blue),
                                     )),
                                   )
                           ],

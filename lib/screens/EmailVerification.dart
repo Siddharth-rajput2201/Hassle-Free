@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/Login.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
 
@@ -11,6 +12,7 @@ class EmailVerification extends StatefulWidget {
 }
 
 class _EmailVerificationState extends State<EmailVerification> {
+  bool _showResendEmailButton = true;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -70,51 +72,87 @@ class _EmailVerificationState extends State<EmailVerification> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () async {
-                        // setState(() {
-                        //   _usernameEnabled = false;
-                        //   _passwordEnabled = false;
-                        //   _signUpButtonEnabled = false;
-                        // });
-                        // await _validatelogin();
-                        // setState(() {
-                        //   _usernameEnabled = true;
-                        //   _passwordEnabled = true;
-                        //   _signUpButtonEnabled = true;
-                        // });
-                      },
-                      child: Container(
-                        height: height * 0.085,
-                        width: width * 0.40,
-                        decoration: BoxDecoration(
-                          color: ThemeColors.kBackGroundColor,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ThemeColors.kDarkShadowColor,
-                              offset: Offset(4, 4),
-                              blurRadius: 15,
-                              spreadRadius: 1,
+                  _showResendEmailButton ? GestureDetector(
+                            onTap: () async {
+                              setState(() {
+                                _showResendEmailButton = false;
+                              });
+                              await Network.resendemail(context);
+                              setState(() {
+                                _showResendEmailButton = true;
+                              });
+                            },
+                            child: Container(
+                              height: height * 0.085,
+                              width: width * 0.40,
+                              decoration: BoxDecoration(
+                                color: ThemeColors.kBackGroundColor,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: ThemeColors.kDarkShadowColor,
+                                    offset: Offset(4, 4),
+                                    blurRadius: 15,
+                                    spreadRadius: 1,
+                                  ),
+                                  BoxShadow(
+                                    color: ThemeColors.kLightShadowColor,
+                                    offset: Offset(-4, -4),
+                                    blurRadius: 15,
+                                    spreadRadius: 1,
+                                  )
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "RESEND EMAIL",
+                                  style: TextStyle(
+                                      fontSize: height * 0.025,
+                                      color: ThemeColors.kTextColor),
+                                ),
+                              ),
                             ),
-                            BoxShadow(
-                              color: ThemeColors.kLightShadowColor,
-                              offset: Offset(-4, -4),
-                              blurRadius: 15,
-                              spreadRadius: 1,
-                            )
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            "RESEND EMAIL",
-                            style: TextStyle(
-                                fontSize: height * 0.025,
-                                color: ThemeColors.kTextColor),
+                          )
+                        : Container(
+                            height: height * 0.085,
+                            width: width * 0.40,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  ThemeColors.kLinearFirstGradient,
+                                  ThemeColors.kLinearSecondGradient,
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                stops: [0.0, 0.4],
+                                tileMode: TileMode.clamp,
+                              ),
+                              color: ThemeColors.kBackGroundColor,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ThemeColors.kDarkShadowColor,
+                                  offset: Offset(4, 4),
+                                  blurRadius: 15,
+                                  spreadRadius: 1,
+                                ),
+                                BoxShadow(
+                                  color: ThemeColors.kLightShadowColor,
+                                  offset: Offset(-4, -4),
+                                  blurRadius: 15,
+                                  spreadRadius: 1,
+                                )
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                "RESEND EMAIL",
+                                style: TextStyle(
+                                    fontSize: height * 0.025,
+                                    color: Colors.blue),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                     Container(
                       height: height * 0.085,
                       width: width * 0.40,
@@ -151,7 +189,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                           },
                           child: Center(
                             child: Text(
-                              "GO BACK",
+                              "LOGIN",
                               style: TextStyle(
                                   fontSize: height * 0.025,
                                   color: ThemeColors.kTextColor),
