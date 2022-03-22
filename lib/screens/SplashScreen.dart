@@ -5,10 +5,10 @@ import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/Login.dart';
 import 'package:hassle_free/screens/UserPass.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
+import 'package:hassle_free/utils/ThemeColors.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   LocalAuthentication authentication = LocalAuthentication();
   bool ?_hasBiometricSensor ;
-  
+
   Future<void> _checkBio() async {
     try {
       _hasBiometricSensor = await authentication.isDeviceSupported();
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
         _getAuth();
       }
     } catch (e) {
-      
+
     }
   }
 
@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context, MaterialPageRoute(builder: (context) => UserPass()));
       }
     }
-    
+
   }
 
   @override
@@ -84,12 +84,35 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ThemeColors.kBackGroundColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/Hassle_Free_Logo_Animate.gif"),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                 
+                  decoration: BoxDecoration(
+                      color: ThemeColors.kBackGroundColor,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ThemeColors.kDarkShadowColor,
+                          offset: Offset(5, 5),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                        BoxShadow(
+                          color: ThemeColors.kLightShadowColor,
+                          offset: Offset(-5, -5),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        )
+                      ]),
+                  child: Image.asset("assets/Hassle_Free_Logo_Animate.gif")),
+            ),
           ],
         ),
       ),
