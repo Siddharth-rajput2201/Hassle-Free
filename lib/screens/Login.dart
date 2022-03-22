@@ -4,8 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/UserPass.dart';
 import 'package:hassle_free/screens/Register.dart';
+import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
+import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -23,14 +26,66 @@ class _LoginState extends State<Login> {
   bool _showPasswordEnabled = true;
   final formGlobalKey = GlobalKey<FormState>();
 
+  bool ?_hasBiometricSensor ;
+  
+  Future<void> _checkBio() async {
+    try {
+      _hasBiometricSensor = await authentication.isDeviceSupported();
+      if (_hasBiometricSensor!) {
+        _getAuth();
+      }
+    } catch (e) {
+      
+    }
+  }
+
+  Future<void> _getAuth() async {
+    bool? isAuth = false;
+    try {
+      isAuth = await authentication.authenticate(
+        localizedReason: "HASSLE FREE",
+        stickyAuth: true,
+        useErrorDialogs: true,
+        androidAuthStrings: AndroidAuthMessages(
+          goToSettingsButton: goToSettings
+          ),
+        sensitiveTransaction: true
+      );
+      if(isAuth)
+      {
+         Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => UserPass()));
+      }
+      else{
+        _getAuth();
+      }
+    } on PlatformException catch (e) {
+      if(e.code == auth_error.notAvailable)
+      {
+        customSnackBar(context, "We recommend to use fingerprint", Colors.orange);
+          Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => UserPass()));
+      }
+    }
+    
+  }
+
+  void _redirect() async {
+    if (await Network.auth(context)) {
+      _checkBio();
+      // Navigator.pushReplacement(
+      //     context, MaterialPageRoute(builder: (context) => UserPass()));
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Login()));
+    }
+  }
+
   Future _validatelogin() async {
     if (formGlobalKey.currentState!.validate() == true) {
       if (await Network.login(userNameController.text.trim(),
           passwordController.text.trim(), context)) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => UserPass()),
-        );
+       _redirect();
       }
     }
   }
@@ -38,7 +93,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
-
     super.initState();
   }
 
