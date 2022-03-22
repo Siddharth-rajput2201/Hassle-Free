@@ -220,7 +220,7 @@ class _RegisterState extends State<Register> {
                                               return "EMAIL CANNOT BE EMPTY";
                                             }
                                             if (!emailRegex
-                                                .hasMatch(valEmail)) {
+                                                .hasMatch(valEmail.trim())) {
                                               return "NOT A VALID EMAIL";
                                             } else {
                                               // setState(() {
