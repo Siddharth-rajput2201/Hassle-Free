@@ -31,8 +31,11 @@ class _RegisterState extends State<Register> {
   Future _validatelogin() async {
     if (formGlobalKey.currentState!.validate() == true) {
       log("REGISTERED");
-      if (await Network.register(userNameController.text.trim(),
-          confirmPasswordController.text.trim(),emailController.text.trim(), context)) {}
+      if (await Network.register(
+          userNameController.text.trim(),
+          confirmPasswordController.text.trim(),
+          emailController.text.trim(),
+          context)) {}
     }
   }
 
@@ -202,8 +205,8 @@ class _RegisterState extends State<Register> {
                                               borderRadius:
                                                   BorderRadius.circular(25.0),
                                             ),
-                                            prefixIcon: Icon(
-                                                Icons.email_outlined),
+                                            prefixIcon:
+                                                Icon(Icons.email_outlined),
                                             hintText: "EMAIL",
                                             hintStyle: TextStyle(
                                                 fontSize: height * 0.025),
@@ -471,13 +474,15 @@ class _RegisterState extends State<Register> {
                                           ],
                                         ),
                                         child: Center(
-                                            child: Text(
-                                          "SIGN UP",
-                                          style: TextStyle(
+                                          child: Text(
+                                            "SIGN UP",
+                                            style: TextStyle(
                                               fontSize: height * 0.025,
-                                              color: ThemeColors.kTextColor),
-                                        )),
-                                      )
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                               ],
                             ),
                           ),

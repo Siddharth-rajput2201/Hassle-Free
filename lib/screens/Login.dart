@@ -240,7 +240,6 @@ class _LoginState extends State<Login> {
                                 ],
                               ),
                             ),
-                            
                             _signUpButtonEnabled
                                 ? GestureDetector(
                                     onTap: () async {
@@ -296,7 +295,7 @@ class _LoginState extends State<Login> {
                                           child: Text(
                                         "LOGIN",
                                         style: TextStyle(
-                                          fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w500,
                                             fontSize: height * 0.025,
                                             color: ThemeColors.kTextColor),
                                       )),
@@ -340,8 +339,9 @@ class _LoginState extends State<Login> {
                                       "LOGIN",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                          fontSize: height * 0.025,
-                                          color: Colors.blue),
+                                        fontSize: height * 0.025,
+                                        color: Colors.blue,
+                                      ),
                                     )),
                                   )
                           ],

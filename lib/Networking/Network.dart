@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/Api.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/screens/EmailVerification.dart';
-import 'package:hassle_free/screens/Login.dart';
+import 'package:hassle_free/screens/EmailVerificationRegister.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/Storage.dart';
 import 'package:http/http.dart' as Http;
@@ -71,13 +71,13 @@ class Network {
       var data = json.decode(response.body);
       if (response.statusCode == 201 &&
           data['message'] == "REGISTERED SUCCESSFULLY") {
-            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Login()),);
+            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EmailVerificationRegister(emailid: emailid,)),);
         customSnackBar(
-            context, "REGISTERED SUCCESSFULLY. KINDLY LOGIN", Colors.green);
+            context, "EMAIL SENT SUCCESSFULLY", Colors.green);
         return true;
       } else {
         if (data['message'] == "USER ALREADY REGISTERED") {
-          customSnackBar(context, "USERNAME ALREADY TAKEN", Colors.red);
+          customSnackBar(context, "USER ALREADY REGISTERED", Colors.red);
           return false;
         }
         if (data['message'] == "PASSWORD LENGTH TOO SHORT") {
