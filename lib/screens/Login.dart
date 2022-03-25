@@ -26,48 +26,41 @@ class _LoginState extends State<Login> {
   bool _showPasswordEnabled = true;
   final formGlobalKey = GlobalKey<FormState>();
 
-  bool ?_hasBiometricSensor ;
-  
+  bool? _hasBiometricSensor;
+
   Future<void> _checkBio() async {
     try {
       _hasBiometricSensor = await authentication.isDeviceSupported();
       if (_hasBiometricSensor!) {
         _getAuth();
       }
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   }
 
   Future<void> _getAuth() async {
     bool? isAuth = false;
     try {
       isAuth = await authentication.authenticate(
-        localizedReason: "HASSLE FREE",
-        stickyAuth: true,
-        useErrorDialogs: true,
-        androidAuthStrings: AndroidAuthMessages(
-          goToSettingsButton: goToSettings
-          ),
-        sensitiveTransaction: true
-      );
-      if(isAuth)
-      {
-         Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => UserPass()));
-      }
-      else{
+          localizedReason: "HASSLE FREE",
+          stickyAuth: true,
+          useErrorDialogs: true,
+          androidAuthStrings:
+              AndroidAuthMessages(goToSettingsButton: goToSettings),
+          sensitiveTransaction: true);
+      if (isAuth) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => UserPass()));
+      } else {
         _getAuth();
       }
     } on PlatformException catch (e) {
-      if(e.code == auth_error.notAvailable)
-      {
-        customSnackBar(context, "We recommend to use fingerprint", Colors.orange);
-          Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => UserPass()));
+      if (e.code == auth_error.notAvailable) {
+        customSnackBar(
+            context, "We recommend to use fingerprint", Colors.orange);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => UserPass()));
       }
     }
-    
   }
 
   void _redirect() async {
@@ -85,7 +78,7 @@ class _LoginState extends State<Login> {
     if (formGlobalKey.currentState!.validate() == true) {
       if (await Network.login(userNameController.text.trim(),
           passwordController.text.trim(), context)) {
-       _redirect();
+        _redirect();
       }
     }
   }
@@ -316,19 +309,6 @@ class _LoginState extends State<Login> {
                                       decoration: BoxDecoration(
                                         color: ThemeColors.kBackGroundColor,
                                         borderRadius: BorderRadius.circular(30),
-                                        // gradient: LinearGradient(
-                                        //   colors: [
-                                        //   // Colors.blue[300]!,
-                                        //   // Colors.blue[200]!,
-                                        //     // Color.fromARGB(255, 189, 204, 230),
-                                        //     // Color.fromARGB(255, 214, 230, 255)
-                                        //     // Color(0xFFf7f5ec)
-                                        //   ],
-                                        //   begin: Alignment.topCenter,
-                                        //   end: Alignment.bottomCenter,
-                                        //   stops: [0.0, 0.4],
-                                        //   tileMode: TileMode.clamp,
-                                        // ),
                                         boxShadow: [
                                           BoxShadow(
                                             color: ThemeColors.kDarkShadowColor,
@@ -389,15 +369,16 @@ class _LoginState extends State<Login> {
                                       ],
                                     ),
                                     child: Center(
-                                        child: Text(
-                                      "LOGIN",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: height * 0.025,
-                                        color: Colors.blue,
+                                      child: Text(
+                                        "LOGIN",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: height * 0.025,
+                                          color: Colors.blue,
+                                        ),
                                       ),
-                                    )),
-                                  )
+                                    ),
+                                  ),
                           ],
                         ),
                       ),

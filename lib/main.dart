@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' ;
 import 'package:hassle_free/screens/SplashScreen.dart';
 
 void main() {

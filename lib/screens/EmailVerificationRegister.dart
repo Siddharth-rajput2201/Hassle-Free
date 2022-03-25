@@ -189,9 +189,9 @@ class _EmailVerificationRegisterState extends State<EmailVerificationRegister> {
                       ),
                       child: Material(
                         borderRadius: BorderRadius.circular(30),
+                        type: MaterialType.transparency,
                         color: ThemeColors.kBackGroundColor,
                         child: InkWell(
-                          splashColor: Colors.blue[200],
                           highlightColor: Colors.transparent,
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {

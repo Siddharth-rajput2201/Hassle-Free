@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/Network.dart';
+import 'package:hassle_free/utils/ThemeColors.dart';
 
 class BottomModalSheetDelete extends StatefulWidget {
   final String appName;
@@ -48,10 +49,13 @@ class _BottomModalSheetDeleteState extends State<BottomModalSheetDelete> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("NO"),
+                  child: Text(
+                    "NO",
+                    style: TextStyle(color: Colors.blue),
+                  ),
                   style: ButtonStyle(
                     side: MaterialStateProperty.all<BorderSide>(
-                        BorderSide(color: Color(0xffe4717d))),
+                        BorderSide(color: Colors.blue, width: 2)),
                     fixedSize: MaterialStateProperty.all<Size>(
                         Size(width * 0.4, height * 0.085)),
                     // backgroundColor:
@@ -69,46 +73,102 @@ class _BottomModalSheetDeleteState extends State<BottomModalSheetDelete> {
                   ),
                 ),
                 _deleteButtonEnabled
-                    ? ElevatedButton(
-                        onPressed: () async {
-                          setState(() {
-                            _deleteButtonEnabled = false;
-                          });
-                          await _validateDeletePass(widget.passwordId);
-                          setState(() {
-                            _deleteButtonEnabled = true;
-                          });
-                        },
-                        child: Text("YES"),
-                        style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all<Size>(
-                              Size(width * 0.4, height * 0.085)),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color(0xffe4717d)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              // side: BorderSide(color: Colors.red),
-                            ),
+                    ? Container(
+                      // duration: Duration(milliseconds: 500),
+                      height: height * 0.085,
+                      width: width * 0.4,
+                      decoration: BoxDecoration(
+                        color: ThemeColors.kBackGroundColor,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: ThemeColors.kTextColor,width: 0.3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: ThemeColors.kDarkShadowColor,
+                            offset: Offset(4, 4),
+                            blurRadius: 7,
+                            spreadRadius: 1,
                           ),
-                        ),
-                      )
-                    : ElevatedButton(
-                        onPressed: null,
-                        child: Text("YES"),
-                        style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all<Size>(
-                              Size(width * 0.4, height * 0.085)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              // side: BorderSide(color: Colors.red),
-                            ),
-                          ),
+                          BoxShadow(
+                            color: ThemeColors.kLightShadowColor,
+                            offset: Offset(-4, -4),
+                            blurRadius: 7,
+                            spreadRadius: 1,
+                          )
+                        ],
+                      ),
+                      child: Material(
+                         borderRadius: BorderRadius.circular(15),
+                         color: ThemeColors.kBackGroundColor,
+                         type: MaterialType.transparency,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(15),
+                          onTap: ()async{
+                             setState(() {
+                        _deleteButtonEnabled = false;
+                      });
+                      await _validateDeletePass(widget.passwordId);
+                      setState(() {
+                        _deleteButtonEnabled = true;
+                      });
+                          },
+                          highlightColor: Colors.transparent,
+                          child: Center(
+                              child: Text(
+                            "DELETE",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: height * 0.025,
+                                color: ThemeColors.kTextColor),
+                          )),
                         ),
                       ),
+                    )
+
+                    : Container(
+                          // duration: Duration(milliseconds: 500),
+                          height: height * 0.085,
+                          width: width * 0.4,
+                          decoration: BoxDecoration(
+                            color: ThemeColors.kBackGroundColor,
+                             border: Border.all(color: ThemeColors.kTextColor,width: 0.3),
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: LinearGradient(
+                              colors: [
+                                ThemeColors.kLinearFirstGradient,
+                                ThemeColors.kLinearSecondGradient,
+                                // Color(0xFFf7f5ec)
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              stops: [0.0, 0.4],
+                              tileMode: TileMode.clamp,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: ThemeColors.kDarkShadowColor,
+                                offset: Offset(4, 4),
+                                blurRadius: 15,
+                                spreadRadius: 1,
+                              ),
+                              BoxShadow(
+                                color: ThemeColors.kLightShadowColor,
+                                offset: Offset(-4, -4),
+                                blurRadius: 15,
+                                spreadRadius: 1,
+                              )
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              "DELETE",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: height * 0.025,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ),
               ],
             )
           ],
