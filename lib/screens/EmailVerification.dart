@@ -178,7 +178,6 @@ class _EmailVerificationState extends State<EmailVerification> {
                         borderRadius: BorderRadius.circular(30),
                         color: ThemeColors.kBackGroundColor,
                         child: InkWell(
-                          splashColor: Colors.blue[200],
                           highlightColor: Colors.transparent,
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
