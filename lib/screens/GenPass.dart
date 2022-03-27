@@ -100,7 +100,7 @@ class _GenPassState extends State<GenPass> {
                           BorderSide(color: ThemeColors.kBackGroundColor),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: ThemeColors.kBackGroundColor),
                       borderRadius: BorderRadius.circular(25.0),

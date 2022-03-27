@@ -186,7 +186,7 @@ class _LoginState extends State<Login> {
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
-                                        enabledBorder: UnderlineInputBorder(
+                                        enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                                   ThemeColors.kBackGroundColor),
@@ -244,7 +244,7 @@ class _LoginState extends State<Login> {
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
-                                        enabledBorder: UnderlineInputBorder(
+                                        enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                                   ThemeColors.kBackGroundColor),

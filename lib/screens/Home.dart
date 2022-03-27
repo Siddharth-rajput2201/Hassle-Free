@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter/rendering.dart';
-// import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
-// import 'package:hassle_free/Networking/Network.dart';
 import 'package:hassle_free/screens/GenPass.dart';
 import 'package:hassle_free/screens/Login.dart';
 import 'package:hassle_free/screens/UserPass.dart';
-import 'package:hassle_free/utils/BottomModalSheetAddPass.dart';
-// import 'package:hassle_free/utils/BottomModalSheetDelete.dart';
-// import 'package:hassle_free/utils/BottomModalSheetEdit.dart';
-// import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:shimmer/shimmer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -35,7 +27,6 @@ class _HomeState extends State<Home> {
     'Password',
   ];
   TextEditingController searchController = TextEditingController();
-  bool _isFabEnabled = true;
   int currentIndex = 0;
   final screens = [UserPass(), GenPass()];
   @override
@@ -254,56 +245,7 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      floatingActionButton: _isFabEnabled
-          ? Container(
-              decoration: BoxDecoration(
-                color: ThemeColors.kBackGroundColor,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: ThemeColors.kDarkShadowColor,
-                    offset: Offset(5, 5),
-                    blurRadius: 7,
-                    spreadRadius: 0.2,
-                  ),
-                  BoxShadow(
-                    color: ThemeColors.kLightShadowColor,
-                    offset: Offset(-5, -5),
-                    blurRadius: 7,
-                    spreadRadius: 0.2,
-                  )
-                ],
-              ),
-              child: FloatingActionButton(
-                disabledElevation: 0,
-                elevation: 0,
-                backgroundColor: ThemeColors.kBackGroundColor,
-                onPressed: () async {
-                  await showModalBottomSheet(
-                      backgroundColor: ThemeColors.kBackGroundColor,
-                      isScrollControlled: true,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25))),
-                      context: context,
-                      builder: (context) {
-                        return BottomModalSheetAddPass();
-                      });
-                  setState(() {
-                    Home();
-                  });
-                },
-                child: Icon(
-                  Icons.add,
-                  color: ThemeColors.kTextColor,
-                ),
-                // backgroundColor:
-                //     Colors.primaries[Random().nextInt(Colors.primaries.length)],
-              ),
-            )
-          : null,
-      body: screens[currentIndex]
+      body: IndexedStack(children:screens,index: currentIndex,)
     );
   }
 }

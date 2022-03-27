@@ -27,6 +27,11 @@ class _RegisterState extends State<Register> {
   bool _showConfirmPasswordEnabled = true;
   RegExp emailRegex = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+  RegExp specialCharRegex =
+      RegExp(r'[!@#$%^&*(),.?":{}|<>]');
+  RegExp upperCaseRegex = RegExp(r'[A-Z]');
+  RegExp lowerCaseRegex = RegExp(r'[a-z]');
+  RegExp numberRegex = RegExp(r'[0-9]');
   final formGlobalKey = GlobalKey<FormState>();
   Future _validatelogin() async {
     if (formGlobalKey.currentState!.validate() == true) {
@@ -141,7 +146,7 @@ class _RegisterState extends State<Register> {
                                               borderRadius:
                                                   BorderRadius.circular(25.0),
                                             ),
-                                            enabledBorder: UnderlineInputBorder(
+                                            enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: ThemeColors
                                                       .kBackGroundColor),
@@ -161,6 +166,10 @@ class _RegisterState extends State<Register> {
                                           validator: (valUsername) {
                                             if (valUsername!.isEmpty) {
                                               return "USERNAME CANNOT BE EMPTY";
+                                            }
+                                            if (valUsername.contains(" ") ==
+                                                true) {
+                                              return "USERNAME SHOULD NOT CONTAIN SPACE";
                                             } else {
                                               // setState(() {
                                               //   _loginButtonEnabled = true;
@@ -198,7 +207,7 @@ class _RegisterState extends State<Register> {
                                               borderRadius:
                                                   BorderRadius.circular(25.0),
                                             ),
-                                            enabledBorder: UnderlineInputBorder(
+                                            enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: ThemeColors
                                                       .kBackGroundColor),
@@ -222,7 +231,8 @@ class _RegisterState extends State<Register> {
                                             if (!emailRegex
                                                 .hasMatch(valEmail.trim())) {
                                               return "NOT A VALID EMAIL";
-                                            } else {
+                                            }
+                                             else {
                                               // setState(() {
                                               //   _loginButtonEnabled = true;
                                               // });
@@ -260,7 +270,7 @@ class _RegisterState extends State<Register> {
                                               borderRadius:
                                                   BorderRadius.circular(25.0),
                                             ),
-                                            enabledBorder: UnderlineInputBorder(
+                                            enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: ThemeColors
                                                       .kBackGroundColor),
@@ -295,6 +305,22 @@ class _RegisterState extends State<Register> {
                                           validator: (valPassword) {
                                             if (valPassword!.isEmpty) {
                                               return "PASSWORD CANNOT BE EMPTY";
+                                            }
+                                            if (!specialCharRegex
+                                                .hasMatch(valPassword.trim())) {
+                                              return "SPECIAL CHARATER MISSING";
+                                            }
+                                              if (!upperCaseRegex
+                                                .hasMatch(valPassword.trim())) {
+                                              return "UPPERCASE MISSING";
+                                            }
+                                            if (!lowerCaseRegex
+                                                .hasMatch(valPassword.trim())) {
+                                              return "LOWERCASE MISSING";
+                                            }
+                                            if (!numberRegex
+                                                .hasMatch(valPassword.trim())) {
+                                              return "NUMBER MISSING";
                                             } else {
                                               // setState(() {
                                               //   _loginButtonEnabled = true;
@@ -334,7 +360,7 @@ class _RegisterState extends State<Register> {
                                               borderRadius:
                                                   BorderRadius.circular(25.0),
                                             ),
-                                            enabledBorder: UnderlineInputBorder(
+                                            enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: ThemeColors
                                                       .kBackGroundColor),
