@@ -48,7 +48,6 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Container(
-
             height: height * .1,
             decoration: BoxDecoration(
                 color: ThemeColors.kBackGroundColor,
@@ -291,7 +290,9 @@ class _HomeState extends State<Home> {
                       builder: (context) {
                         return BottomModalSheetAddPass();
                       });
-                  setState(() {});
+                  setState(() {
+                    Home();
+                  });
                 },
                 child: Icon(
                   Icons.add,
@@ -302,7 +303,7 @@ class _HomeState extends State<Home> {
               ),
             )
           : null,
-      body: IndexedStack(index: currentIndex, children: screens),
+      body: screens[currentIndex]
     );
   }
 }
