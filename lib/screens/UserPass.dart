@@ -3,169 +3,29 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/Networking/Network.dart';
-import 'package:hassle_free/screens/Login.dart';
-import 'package:hassle_free/utils/BottomModalSheetAddPass.dart';
 import 'package:hassle_free/utils/BottomModalSheetDelete.dart';
 import 'package:hassle_free/utils/BottomModalSheetEdit.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class UserPass extends StatefulWidget {
-  const UserPass({Key? key}) : super(key: key);
+  const UserPass({ Key? key }) : super(key: key);
 
   @override
-  _UserPassState createState() => _UserPassState();
+  State<UserPass> createState() => _UserPassState();
 }
 
 class _UserPassState extends State<UserPass> {
-  List<Pass> passData = [];
+ List<Pass> passData = [];
   List<Pass> searchResult = [];
   TextEditingController searchController = TextEditingController();
   bool _isFabEnabled = true;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+        double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-        drawer: Drawer(backgroundColor: ThemeColors.kBackGroundColor),
-        backgroundColor: ThemeColors.kBackGroundColor,
-        appBar: AppBar(
-          toolbarHeight: height * 0.125,
-          elevation: 0,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Builder(builder: (context) {
-              return GestureDetector(
-                onTap: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                child: Container(
-                  width: width * 0.125,
-                  decoration: BoxDecoration(
-                      color: ThemeColors.kBackGroundColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: ThemeColors.kDarkShadowColor,
-                          offset: Offset(5, 5),
-                          blurRadius: 7,
-                          spreadRadius: 0.2,
-                        ),
-                        BoxShadow(
-                          color: ThemeColors.kLightShadowColor,
-                          offset: Offset(-5, -5),
-                          blurRadius: 7,
-                          spreadRadius: 0.2,
-                        )
-                      ]),
-                  child: Icon(
-                    Icons.menu,
-                    color: ThemeColors.kTextColor,
-                  ),
-                ),
-              );
-            }),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: GestureDetector(
-                onTap: () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  await prefs.clear();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
-                },
-                child: Container(
-                  width: width * 0.135,
-                  decoration: BoxDecoration(
-                      color: ThemeColors.kBackGroundColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: ThemeColors.kDarkShadowColor,
-                          offset: Offset(5, 5),
-                          blurRadius: 7,
-                          spreadRadius: 0.2,
-                        ),
-                        BoxShadow(
-                          color: ThemeColors.kLightShadowColor,
-                          offset: Offset(-5, -5),
-                          blurRadius: 7,
-                          spreadRadius: 0.2,
-                        )
-                      ]),
-                  child: Icon(
-                    Icons.logout,
-                    color: ThemeColors.kTextColor,
-                  ),
-                ),
-              ),
-            )
-          ],
-          backgroundColor: ThemeColors.kBackGroundColor,
-          title: Center(
-            child: Text(
-              "Hassle Free",
-              style: TextStyle(
-                  color: ThemeColors.kTextColor, fontWeight: FontWeight.w600),
-            ),
-          ),
-        ),
-        floatingActionButton: _isFabEnabled
-            ? Container(
-                decoration: BoxDecoration(
-                  color: ThemeColors.kBackGroundColor,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: ThemeColors.kDarkShadowColor,
-                      offset: Offset(5, 5),
-                      blurRadius: 7,
-                      spreadRadius: 0.2,
-                    ),
-                    BoxShadow(
-                      color: ThemeColors.kLightShadowColor,
-                      offset: Offset(-5, -5),
-                      blurRadius: 7,
-                      spreadRadius: 0.2,
-                    )
-                  ],
-                ),
-                child: FloatingActionButton(
-                  disabledElevation: 0,
-                  elevation: 0,
-                  backgroundColor: ThemeColors.kBackGroundColor,
-                  onPressed: () async {
-                    await showModalBottomSheet(
-                        backgroundColor: ThemeColors.kBackGroundColor,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25),
-                                topRight: Radius.circular(25))),
-                        context: context,
-                        builder: (context) {
-                          return BottomModalSheetAddPass();
-                        });
-                    setState(() {});
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: ThemeColors.kTextColor,
-                  ),
-                  // backgroundColor:
-                  //     Colors.primaries[Random().nextInt(Colors.primaries.length)],
-                ),
-              )
-            : null,
-        body: Column(
+    return Column(
           children: [
             Expanded(
               child: Container(
@@ -228,7 +88,6 @@ class _UserPassState extends State<UserPass> {
                                   ],
                                 ),
                                 height: height * 0.30,
-                               
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Row(
@@ -261,17 +120,20 @@ class _UserPassState extends State<UserPass> {
                                                 Flexible(
                                                   child: Text(
                                                     passData[index].username,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     softWrap: false,
                                                     style: TextStyle(
-                                                      color: ThemeColors.kTextColor,
+                                                      color: ThemeColors
+                                                          .kTextColor,
                                                       fontSize: height * 0.030,
                                                     ),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 10.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
                                                   child: Container(
                                                     decoration: BoxDecoration(
                                                       color: ThemeColors
@@ -290,7 +152,8 @@ class _UserPassState extends State<UserPass> {
                                                         BoxShadow(
                                                           color: ThemeColors
                                                               .kLightShadowColor,
-                                                          offset: Offset(-5, -5),
+                                                          offset:
+                                                              Offset(-5, -5),
                                                           blurRadius: 10,
                                                           spreadRadius: 0.5,
                                                         )
@@ -307,8 +170,8 @@ class _UserPassState extends State<UserPass> {
                                                                   text: passData[
                                                                           index]
                                                                       .username);
-                                                          await Clipboard.setData(
-                                                              data);
+                                                          await Clipboard
+                                                              .setData(data);
                                                           customSnackBar(
                                                               context,
                                                               "COPIED TO CLIPBOARD",
@@ -337,8 +200,10 @@ class _UserPassState extends State<UserPass> {
                                                     children: [
                                                       Flexible(
                                                         child: Text(
-                                                          snapshot.data.toString(),
-                                                          overflow: TextOverflow.ellipsis,
+                                                          snapshot.data
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           softWrap: false,
                                                           style: TextStyle(
                                                             color: ThemeColors
@@ -350,7 +215,8 @@ class _UserPassState extends State<UserPass> {
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets.only(
+                                                            const EdgeInsets
+                                                                    .only(
                                                                 left: 10.0),
                                                         child: Container(
                                                           decoration:
@@ -359,15 +225,17 @@ class _UserPassState extends State<UserPass> {
                                                                 .kBackGroundColor,
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(30),
+                                                                    .circular(
+                                                                        30),
                                                             boxShadow: [
                                                               BoxShadow(
                                                                 color: ThemeColors
                                                                     .kDarkShadowColor,
-                                                                offset:
-                                                                    Offset(5, 5),
+                                                                offset: Offset(
+                                                                    5, 5),
                                                                 blurRadius: 10,
-                                                                spreadRadius: 0.5,
+                                                                spreadRadius:
+                                                                    0.5,
                                                               ),
                                                               BoxShadow(
                                                                 color: ThemeColors
@@ -375,7 +243,8 @@ class _UserPassState extends State<UserPass> {
                                                                 offset: Offset(
                                                                     -5, -5),
                                                                 blurRadius: 10,
-                                                                spreadRadius: 0.5,
+                                                                spreadRadius:
+                                                                    0.5,
                                                               )
                                                             ],
                                                           ),
@@ -398,7 +267,8 @@ class _UserPassState extends State<UserPass> {
                                                                 customSnackBar(
                                                                     context,
                                                                     "COPIED TO CLIPBOARD",
-                                                                    Colors.green);
+                                                                    Colors
+                                                                        .green);
                                                               },
                                                               icon: Icon(
                                                                 Icons
@@ -426,7 +296,8 @@ class _UserPassState extends State<UserPass> {
                                                       ),
                                                     ),
                                                     baseColor: Colors.grey,
-                                                    highlightColor: Colors.white,
+                                                    highlightColor:
+                                                        Colors.white,
                                                   );
                                                 }
                                               },
@@ -441,8 +312,8 @@ class _UserPassState extends State<UserPass> {
                                           children: [
                                             Container(
                                               decoration: BoxDecoration(
-                                                color:
-                                                    ThemeColors.kBackGroundColor,
+                                                color: ThemeColors
+                                                    .kBackGroundColor,
                                                 borderRadius:
                                                     BorderRadius.circular(30),
                                                 boxShadow: [
@@ -465,43 +336,44 @@ class _UserPassState extends State<UserPass> {
                                               child: Material(
                                                 type: MaterialType.transparency,
                                                 child: InkWell(
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(50)),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(50)),
                                                   onTap: () async {
                                                     await showModalBottomSheet(
-                                                        isScrollControlled: true,
-                                                        backgroundColor:
-                                                            ThemeColors
-                                                                .kBackGroundColor,
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor: ThemeColors
+                                                            .kBackGroundColor,
                                                         shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.only(
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            25),
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            25))),
+                                                            borderRadius: BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        25),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        25))),
                                                         context: context,
                                                         builder: (builder) {
                                                           return BottomModalSheetEdit(
-                                                              appname:
-                                                                  passData[index]
-                                                                      .appName,
-                                                              passwordId:
-                                                                  passData[index]
-                                                                      .passwordId
-                                                                      .toString());
+                                                              appname: passData[
+                                                                      index]
+                                                                  .appName,
+                                                              passwordId: passData[
+                                                                      index]
+                                                                  .passwordId
+                                                                  .toString());
                                                         });
                                                     setState(() {});
                                                   },
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(
-                                                        15.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15.0),
                                                     child: Icon(
                                                       Icons.edit,
-                                                      color:
-                                                          ThemeColors.kTextColor,
+                                                      color: ThemeColors
+                                                          .kTextColor,
                                                     ),
                                                   ),
                                                 ),
@@ -509,8 +381,8 @@ class _UserPassState extends State<UserPass> {
                                             ),
                                             Container(
                                               decoration: BoxDecoration(
-                                                color:
-                                                    ThemeColors.kBackGroundColor,
+                                                color: ThemeColors
+                                                    .kBackGroundColor,
                                                 borderRadius:
                                                     BorderRadius.circular(30),
                                                 boxShadow: [
@@ -533,23 +405,23 @@ class _UserPassState extends State<UserPass> {
                                               child: Material(
                                                 type: MaterialType.transparency,
                                                 child: InkWell(
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(50)),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(50)),
                                                   onTap: () async {
                                                     await showModalBottomSheet(
-                                                        backgroundColor:
-                                                            ThemeColors
-                                                                .kBackGroundColor,
-                                                        isScrollControlled: true,
+                                                        backgroundColor: ThemeColors
+                                                            .kBackGroundColor,
+                                                        isScrollControlled:
+                                                            true,
                                                         shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.only(
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            25),
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            25))),
+                                                            borderRadius: BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        25),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        25))),
                                                         context: context,
                                                         builder: (context) {
                                                           return BottomModalSheetDelete(
@@ -565,12 +437,13 @@ class _UserPassState extends State<UserPass> {
                                                     setState(() {});
                                                   },
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(
-                                                        15.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15.0),
                                                     child: Icon(
                                                       Icons.delete_outline,
-                                                      color:
-                                                          ThemeColors.kTextColor,
+                                                      color: ThemeColors
+                                                          .kTextColor,
                                                     ),
                                                   ),
                                                 ),
@@ -602,6 +475,6 @@ class _UserPassState extends State<UserPass> {
               ),
             ),
           ],
-        ));
+        );
   }
 }

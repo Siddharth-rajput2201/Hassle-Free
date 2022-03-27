@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Network.dart';
-import 'package:hassle_free/screens/UserPass.dart';
+import 'package:hassle_free/screens/Home.dart';
 import 'package:hassle_free/screens/Register.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
           sensitiveTransaction: true);
       if (isAuth) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => UserPass()));
+            context, MaterialPageRoute(builder: (context) => Home()));
       } else {
         _getAuth();
       }
@@ -58,7 +58,7 @@ class _LoginState extends State<Login> {
         customSnackBar(
             context, "We recommend to use fingerprint", Colors.orange);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => UserPass()));
+            context, MaterialPageRoute(builder: (context) => Home()));
       }
     }
   }
