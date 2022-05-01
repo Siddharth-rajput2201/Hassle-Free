@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
   static Future<bool> login(
-    String username, String password, BuildContext context) async {
+      String username, String password, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.login);
     Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
@@ -38,18 +38,21 @@ class Network {
           customSnackBar(
               context, "EITHER USERNAME OR PASSWORD IS INCORRECT", Colors.red);
           return false;
-        } 
-         if (data['message'] == "MISSING TOKEN") {
+        }
+        if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
           return false;
         }
         if (data['message'] == "ACCOUNT NOT VERIFIED") {
-           await prefs.setString("username", username);
-           await prefs.setString("password", password);
-           Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EmailVerification()),);
+          await prefs.setString("username", username);
+          await prefs.setString("password", password);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => EmailVerification()),
+          );
           customSnackBar(context, "ACCOUNT NOT VERIFIED", Colors.red);
           return false;
-        }else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -62,18 +65,27 @@ class Network {
     }
   }
 
-  static Future<bool> register(
-    String username, String password, String emailid ,BuildContext context) async {
+  static Future<bool> register(String username, String password, String emailid,
+      BuildContext context) async {
     var url = Uri.parse(Api.register);
-    Map body = {'USER_NAME': username, 'USER_PASSWORD': password ,'EMAIL_ID':emailid};
+    Map body = {
+      'USER_NAME': username,
+      'USER_PASSWORD': password,
+      'EMAIL_ID': emailid
+    };
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
       if (response.statusCode == 201 &&
           data['message'] == "REGISTERED SUCCESSFULLY") {
-            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EmailVerificationRegister(emailid: emailid,)),);
-        customSnackBar(
-            context, "EMAIL SENT SUCCESSFULLY", Colors.green);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EmailVerificationRegister(
+                    emailid: emailid,
+                  )),
+        );
+        customSnackBar(context, "EMAIL SENT SUCCESSFULLY", Colors.green);
         return true;
       } else {
         if (data['message'] == "USER ALREADY REGISTERED") {
@@ -87,7 +99,7 @@ class Network {
         if (data['message'] == "PASSWORD LENGTH TOO LONG") {
           customSnackBar(context, "PASSWORD LENGTH TOO LONG", Colors.red);
           return false;
-        } 
+        }
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
           return false;
@@ -97,17 +109,20 @@ class Network {
           return false;
         }
         if (data['message'] == "PASSWORD MUST CONTAIN A UPPER CHARACTER") {
-          customSnackBar(context, "PASSWORD MUST CONTAIN A UPPER CHARACTER", Colors.red);
+          customSnackBar(
+              context, "PASSWORD MUST CONTAIN A UPPER CHARACTER", Colors.red);
           return false;
         }
         if (data['message'] == "PASSWORD MUST CONTAIN A LOWER CHARACTER") {
-          customSnackBar(context, "PASSWORD MUST CONTAIN A LOWER CHARACTER", Colors.red);
+          customSnackBar(
+              context, "PASSWORD MUST CONTAIN A LOWER CHARACTER", Colors.red);
           return false;
         }
         if (data['message'] == "PASSWORD MUST CONTAIN A SPECIAL CHARATER") {
-          customSnackBar(context, "PASSWORD MUST CONTAIN A SPECIAL CHARATER", Colors.red);
+          customSnackBar(
+              context, "PASSWORD MUST CONTAIN A SPECIAL CHARATER", Colors.red);
           return false;
-        }else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -120,40 +135,38 @@ class Network {
     }
   }
 
-    static Future<bool> addpass(
-    String appusername, String apppassword, String appname,BuildContext context) async {
+  static Future<bool> addpass(String appusername, String apppassword,
+      String appname, BuildContext context) async {
     var url = Uri.parse(Api.add);
     String token = await Storage.getToken();
     String userpass = await Storage.getPassword();
     Map body = {
-    'APP_NAME': appname ,
-    'APP_USERNAME': appusername,
-    'APP_PASSWORD': apppassword,
-    'USER_PASSWORD': userpass,
-    'JWT_TOKEN': token
-     };
+      'APP_NAME': appname,
+      'APP_USERNAME': appusername,
+      'APP_PASSWORD': apppassword,
+      'USER_PASSWORD': userpass,
+      'JWT_TOKEN': token
+    };
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
       if (response.statusCode == 200 &&
           data['message'] == "ADDED SUCCESSFULLY") {
-        customSnackBar(
-            context, "ADDED SUCCESSFULLY", Colors.green);
+        customSnackBar(context, "ADDED SUCCESSFULLY", Colors.green);
         return true;
       } else {
         if (data['message'] == "UNAUTHORIZED") {
           customSnackBar(context, "UNAUTHORIZED", Colors.red);
           return false;
-        }
-       else {
+        } else {
           if (data['message'] == "MISSING TOKEN") {
-          customSnackBar(context, "TOKEN ERROR", Colors.red);
-          return false;
-        }
-         else{ log(response.body);
-          customSnackBar(context, "ERROR", Colors.red);
-          return false;
-         }
+            customSnackBar(context, "TOKEN ERROR", Colors.red);
+            return false;
+          } else {
+            log(response.body);
+            customSnackBar(context, "ERROR", Colors.red);
+            return false;
+          }
         }
       }
     } catch (error) {
@@ -163,21 +176,17 @@ class Network {
     }
   }
 
-    static Future<bool> deletepass(
-    String passwordid,BuildContext context) async {
+  static Future<bool> deletepass(
+      String passwordid, BuildContext context) async {
     var url = Uri.parse(Api.deletepass);
     String token = await Storage.getToken();
-    Map body = {
-    'PASSWORD_ID': passwordid ,
-    'JWT_TOKEN': token
-     };
+    Map body = {'PASSWORD_ID': passwordid, 'JWT_TOKEN': token};
     try {
       final response = await Http.delete(url, body: body);
       var data = json.decode(response.body);
       if (response.statusCode == 200 &&
           data['message'] == "DELETE SUCCESSFULLY") {
-        customSnackBar(
-            context, "DELETE SUCCESSFULLY", Colors.green);
+        customSnackBar(context, "DELETE SUCCESSFULLY", Colors.green);
         return true;
       } else {
         if (data['message'] == "UNAUTHORIZED") {
@@ -187,8 +196,7 @@ class Network {
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
           return false;
-        }
-       else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -201,15 +209,58 @@ class Network {
     }
   }
 
-     static Future<bool> updateappname(
-    String passwordid,String updateappname,BuildContext context) async {
+  static Future<void> deleteacc(BuildContext context) async {
+    var url = Uri.parse(Api.deleteaccount);
+    String username = await Storage.getUserName();
+    String password = await Storage.getPassword();
+    Map body = {
+      'USER_NAME': username,
+      'USER_PASSWORD': password,
+    };
+    try {
+      final response = await Http.post(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 201 &&
+          data['message'] == "EMAIL SUCCESSFULLY SENT") {
+        customSnackBar(context, "EMAIL SENT SUCCESSFULLY", Colors.green);
+      } else {
+        if (data['message'] == "USERNAME CANNOT BE EMPTY") {
+          customSnackBar(context, "USERNAME CANNOT BE EMPTY", Colors.red);
+        }
+        if (data['message'] == "PASSWORD CANNOT BE EMPTY") {
+          customSnackBar(context, "PASSWORD CANNOT BE EMPTY", Colors.red);
+        }
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+        }
+        if (data['message'] == "INVALID CREDENTIALS") {
+          customSnackBar(context, "INVALID CREDENTIALS", Colors.red);
+        }
+        if (data['message'] == "USER DOES NOT EXIST") {
+          customSnackBar(context, "NO USER FOUND", Colors.red);
+        }
+        if (data['message'] == "ACCOUNT NOT VERIFIED") {
+          customSnackBar(context, "ACCOUNT NOT VERIFIED", Colors.red);
+        } else {
+          log(response.body);
+          customSnackBar(context, "ERROR", Colors.red);
+        }
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+    }
+  }
+
+  static Future<bool> updateappname(
+      String passwordid, String updateappname, BuildContext context) async {
     var url = Uri.parse(Api.updateappname);
     String token = await Storage.getToken();
     Map body = {
-    'PASSWORD_ID': passwordid ,
-    'JWT_TOKEN': token,
-    'CHANGE_APPNAME' : updateappname
-     };
+      'PASSWORD_ID': passwordid,
+      'JWT_TOKEN': token,
+      'CHANGE_APPNAME': updateappname
+    };
     try {
       final response = await Http.put(url, body: body);
       var data = json.decode(response.body);
@@ -224,8 +275,7 @@ class Network {
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
           return false;
-        }
-       else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -238,15 +288,15 @@ class Network {
     }
   }
 
-   static Future<bool> updateappusername(
-    String passwordid,String updateappusername,BuildContext context) async {
+  static Future<bool> updateappusername(
+      String passwordid, String updateappusername, BuildContext context) async {
     var url = Uri.parse(Api.updateappusername);
     String token = await Storage.getToken();
     Map body = {
-    'PASSWORD_ID': passwordid ,
-    'JWT_TOKEN': token,
-    'CHANGE_APPUSERNAME' : updateappusername
-     };
+      'PASSWORD_ID': passwordid,
+      'JWT_TOKEN': token,
+      'CHANGE_APPUSERNAME': updateappusername
+    };
     try {
       final response = await Http.put(url, body: body);
       var data = json.decode(response.body);
@@ -263,8 +313,7 @@ class Network {
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
           return false;
-        }
-       else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -278,16 +327,16 @@ class Network {
   }
 
   static Future<bool> updatepassword(
-    String passwordid,String updatepassword,BuildContext context) async {
+      String passwordid, String updatepassword, BuildContext context) async {
     var url = Uri.parse(Api.updatepassword);
     String token = await Storage.getToken();
     String password = await Storage.getPassword();
     Map body = {
-    'PASSWORD_ID': passwordid ,
-    'JWT_TOKEN': token,
-    'USER_PASSWORD' : password,
-    'CHANGE_PASSWORD' : updatepassword
-     };
+      'PASSWORD_ID': passwordid,
+      'JWT_TOKEN': token,
+      'USER_PASSWORD': password,
+      'CHANGE_PASSWORD': updatepassword
+    };
     try {
       final response = await Http.put(url, body: body);
       var data = json.decode(response.body);
@@ -304,8 +353,7 @@ class Network {
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
           return false;
-        }
-       else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -328,7 +376,7 @@ class Network {
         List data = json.decode(response.body);
         log(data.toString());
         return data.map((e) => Pass.fromJson(e)).toList();
-      } else {      
+      } else {
         log(response.body);
         customSnackBar(context, "ERROR", Colors.red);
         return [];
@@ -340,15 +388,18 @@ class Network {
     }
   }
 
-  static Future<String> decrypt(String encryptedPass,BuildContext context,) async {
+  static Future<String> decrypt(
+    String encryptedPass,
+    BuildContext context,
+  ) async {
     var url = Uri.parse(Api.decrypt);
     String token = await Storage.getToken();
     String apppass = await Storage.getPassword();
     Map body = {
       'JWT_TOKEN': token,
-      'APP_PASS' : encryptedPass,
-      'PASS' : apppass,
-      };
+      'APP_PASS': encryptedPass,
+      'PASS': apppass,
+    };
     try {
       final response = await Http.post(url, body: body);
       if (response.statusCode == 200) {
@@ -369,14 +420,13 @@ class Network {
   static Future<bool> auth(BuildContext context) async {
     var url = Uri.parse(Api.auth);
     String token = await Storage.getToken();
-    Map body = {  
-    'JWT_TOKEN': token,
-   };
+    Map body = {
+      'JWT_TOKEN': token,
+    };
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
-      if (response.statusCode == 200 &&
-          data['message'] == "AUTHENTICATED") {
+      if (response.statusCode == 200 && data['message'] == "AUTHENTICATED") {
         // customSnackBar(
         //     context, "UPDATED SUCCESSFULLY", Colors.green);
         return true;
@@ -386,8 +436,7 @@ class Network {
         }
         if (data['message'] == "MISSING TOKEN") {
           return false;
-        }
-       else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
@@ -400,23 +449,20 @@ class Network {
     }
   }
 
-
-
   static Future<void> resendemail(BuildContext context) async {
     var url = Uri.parse(Api.resendEmail);
     String username = await Storage.getUserName();
     String password = await Storage.getPassword();
     Map body = {
-    'USER_NAME' : username,
-    'USER_PASSWORD' : password,
-     };
+      'USER_NAME': username,
+      'USER_PASSWORD': password,
+    };
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
       if (response.statusCode == 201 &&
           data['message'] == "EMAIL SUCCESSFULLY SENT") {
-        customSnackBar(
-            context, "EMAIL SENT SUCCESSFULLY", Colors.green);
+        customSnackBar(context, "EMAIL SENT SUCCESSFULLY", Colors.green);
       } else {
         if (data['message'] == "UNAUTHORIZED") {
           customSnackBar(context, "UNAUTHORIZED", Colors.red);
@@ -432,8 +478,7 @@ class Network {
         }
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
-        }
-       else {
+        } else {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
         }
@@ -443,5 +488,4 @@ class Network {
       log(error.toString());
     }
   }
-
 }

@@ -7,4 +7,5 @@ class ThemeColors{
   static const Color kLinearFirstGradient = Color.fromARGB(255, 189, 204, 230);
   static const Color kLinearSecondGradient = Color.fromARGB(255, 214, 230, 255);
   static const Color kTextColor = Color(0xFF747474);
+  static const Color kDeleteColor = Colors.red;
 }
