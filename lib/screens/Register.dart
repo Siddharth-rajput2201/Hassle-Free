@@ -308,7 +308,7 @@ class _RegisterState extends State<Register> {
                                             }
                                             if (!specialCharRegex
                                                 .hasMatch(valPassword.trim())) {
-                                              return "SPECIAL CHARATER MISSING";
+                                              return "SPECIAL CHARACTER MISSING";
                                             }
                                               if (!upperCaseRegex
                                                 .hasMatch(valPassword.trim())) {
