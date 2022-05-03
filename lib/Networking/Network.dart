@@ -26,6 +26,7 @@ class Network {
         await prefs.setString("token", data['token']);
         await prefs.setString("username", username);
         await prefs.setString("password", password);
+        log(data['token'].toString());
         //Storage.storeUsername(username);
         //Storage.storePassword(password);
         return true;
@@ -428,8 +429,6 @@ class Network {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
       if (response.statusCode == 200 && data['message'] == "AUTHENTICATED") {
-        // customSnackBar(
-        //     context, "UPDATED SUCCESSFULLY", Colors.green);
         return true;
       } else {
         if (data['message'] == "UNAUTHORIZED") {
