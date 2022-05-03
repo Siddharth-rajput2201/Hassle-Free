@@ -1,6 +1,6 @@
 class Api { 
   static String domain = "https://hassle-free.herokuapp.com";
-  // static String domain = "http://192.168.0.104:5000";
+  // static String domain = "http://127.0.0.1:5000/";
 
   //authentication auth / endpoint
   static String login = domain + '/auth/login';

@@ -38,10 +38,11 @@ Widget build(BuildContext context) {
                     await Network.deleteacc(context);
                     SharedPreferences prefs =
                       await SharedPreferences.getInstance();
-                  await prefs.clear();
-                     Navigator.pushReplacement(
+                  await prefs.clear(); 
+                     Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Login()),
+                    (Route<dynamic> route) => false
                   );
                   },
                   child: Text(

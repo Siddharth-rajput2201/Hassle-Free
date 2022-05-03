@@ -13,10 +13,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
   static Future<bool> login(
-      String username, String password, BuildContext context) async {
+    String username, String password, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.login);
     Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
+    log(body.toString());
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
