@@ -6,6 +6,7 @@ import 'package:hassle_free/Networking/Api.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/screens/EmailVerification.dart';
 import 'package:hassle_free/screensweb/EmailVerificationRegisterWeb.dart';
+import 'package:hassle_free/screensweb/EmailVerificationWeb.dart';
 import 'package:hassle_free/screensweb/HomeWeb.dart';
 import 'package:hassle_free/screensweb/LoginWeb.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
@@ -86,7 +87,7 @@ class NetworkWeb {
           await prefs.setString("password", password);
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => EmailVerification()),
+            MaterialPageRoute(builder: (context) => EmailVerificationWeb()),
           );
           customSnackBar(context, "ACCOUNT NOT VERIFIED", Colors.red);
           return false;
