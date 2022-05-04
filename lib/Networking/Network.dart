@@ -17,7 +17,6 @@ class Network {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.login);
     Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
-    log(body.toString());
     try {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);

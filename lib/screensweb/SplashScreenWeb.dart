@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hassle_free/NetworkingWeb.dart';
+import 'package:hassle_free/Networking/NetworkingWeb.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
 
 
@@ -26,7 +26,6 @@ class _SplashScreenWebState extends State<SplashScreenWeb> {
         if (constaints.maxWidth <= mobileLimit) {
             return SplashScreenWebView(maxWidth: constaints.maxWidth/1.75, maxHeight: constaints.maxHeight/2.25,);
         } else {
-          // print("BROWSER=============>");
           return SplashScreenWebView(maxWidth: constaints.maxWidth/2.85,maxHeight: constaints.maxHeight/1.75,);
         }
       },
