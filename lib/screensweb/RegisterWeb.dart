@@ -68,11 +68,11 @@ class _RegisterWebViewState extends State<RegisterWebView> {
   Future _validatelogin() async {
     if (formGlobalKey.currentState!.validate() == true) {
       log("REGISTERED");
-      if (await NetworkWeb.register(
+      await NetworkWeb.register(
           userNameController.text.trim(),
           confirmPasswordController.text.trim(),
           emailController.text.trim(),
-          context)) {}
+          context);
     }
   }
 
@@ -445,67 +445,66 @@ class _RegisterWebViewState extends State<RegisterWebView> {
                                 ),
                                 _loginButtonEnabled
                                     ? Container(
-                                      // duration: Duration(milliseconds: 500),
-                                      height: height * 0.085,
-                                      width: widget.maxWidth,
-                                      decoration: BoxDecoration(
-                                        color: ThemeColors.kBackGroundColor,
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ThemeColors
-                                                .kDarkShadowColor,
-                                            offset: Offset(4, 4),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                          BoxShadow(
-                                            color: ThemeColors
-                                                .kLightShadowColor,
-                                            offset: Offset(-4, -4),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          )
-                                        ],
-                                      ),
-                                      child: Material(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        color: ThemeColors.kBackGroundColor,
-                                        child: InkWell(
-                                          onTap: () async {
-                                      setState(() {
-                                        _usernameEnabled = false;
-                                        _passwordEnabled = false;
-                                        _loginButtonEnabled = false;
-                                        _emailEnabled = false;
-                                        _confirmPasswordEnabled = false;
-                                      });
-                                      await _validatelogin();
-                                      setState(() {
-                                        _usernameEnabled = true;
-                                        _passwordEnabled = true;
-                                        _loginButtonEnabled = true;
-                                        _emailEnabled = true;
-                                        _confirmPasswordEnabled = true;
-                                      });
-                                    },
-                                          highlightColor:
-                                              Colors.transparent,
+                                        // duration: Duration(milliseconds: 500),
+                                        height: height * 0.085,
+                                        width: widget.maxWidth,
+                                        decoration: BoxDecoration(
+                                          color: ThemeColors.kBackGroundColor,
                                           borderRadius:
                                               BorderRadius.circular(30),
-                                          child: Center(
-                                              child: Text(
-                                            "SIGN UP",
-                                            style: TextStyle(
-                                                fontSize: height * 0.025,
-                                                color:
-                                                    ThemeColors.kTextColor),
-                                          )),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  ThemeColors.kDarkShadowColor,
+                                              offset: Offset(4, 4),
+                                              blurRadius: 15,
+                                              spreadRadius: 1,
+                                            ),
+                                            BoxShadow(
+                                              color:
+                                                  ThemeColors.kLightShadowColor,
+                                              offset: Offset(-4, -4),
+                                              blurRadius: 15,
+                                              spreadRadius: 1,
+                                            )
+                                          ],
                                         ),
-                                      ),
-                                    )
+                                        child: Material(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          color: ThemeColors.kBackGroundColor,
+                                          child: InkWell(
+                                            onTap: () async {
+                                              setState(() {
+                                                _usernameEnabled = false;
+                                                _passwordEnabled = false;
+                                                _loginButtonEnabled = false;
+                                                _emailEnabled = false;
+                                                _confirmPasswordEnabled = false;
+                                              });
+                                              await _validatelogin();
+                                              setState(() {
+                                                _usernameEnabled = true;
+                                                _passwordEnabled = true;
+                                                _loginButtonEnabled = true;
+                                                _emailEnabled = true;
+                                                _confirmPasswordEnabled = true;
+                                              });
+                                            },
+                                            highlightColor: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            child: Center(
+                                                child: Text(
+                                              "SIGN UP",
+                                              style: TextStyle(
+                                                  fontSize: height * 0.025,
+                                                  color:
+                                                      ThemeColors.kTextColor),
+                                            )),
+                                          ),
+                                        ),
+                                      )
                                     : Container(
                                         // duration: Duration(milliseconds: 500),
                                         height: height * 0.085,

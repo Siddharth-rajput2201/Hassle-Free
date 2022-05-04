@@ -1,17 +1,18 @@
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/Api.dart';
+import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/screens/EmailVerification.dart';
-import 'package:hassle_free/screens/Home.dart';
 import 'package:hassle_free/screensweb/EmailVerificationRegisterWeb.dart';
+import 'package:hassle_free/screensweb/HomeWeb.dart';
 import 'package:hassle_free/screensweb/LoginWeb.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/Storage.dart';
 import 'package:http/http.dart' as Http;
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
-
 
 class NetworkWeb {
   static Future<void> authweb(BuildContext context) async {
@@ -24,10 +25,10 @@ class NetworkWeb {
       final response = await Http.post(url, body: body);
       var data = json.decode(response.body);
       if (response.statusCode == 200 && data['message'] == "AUTHENTICATED") {
-         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Home()),
-          );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeWeb()),
+        );
       } else {
         if (data['message'] == "UNAUTHORIZED") {
           Navigator.pushReplacement(
@@ -40,7 +41,7 @@ class NetworkWeb {
             context,
             MaterialPageRoute(builder: (context) => LoginWeb()),
           );
-        } 
+        }
       }
     } catch (error) {
       customSnackBar(context, "ERROR", Colors.red);
@@ -48,9 +49,8 @@ class NetworkWeb {
     }
   }
 
-
-    static Future<bool> login(
-    String username, String password, BuildContext context) async {
+  static Future<bool> login(
+      String username, String password, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.login);
     Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
@@ -103,7 +103,7 @@ class NetworkWeb {
     }
   }
 
-   static Future<void> resendemail(BuildContext context) async {
+  static Future<void> resendemail(BuildContext context) async {
     var url = Uri.parse(Api.resendEmail);
     String username = await Storage.getUserName();
     String password = await Storage.getPassword();
@@ -132,7 +132,7 @@ class NetworkWeb {
         }
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
-        } 
+        }
       }
     } catch (error) {
       customSnackBar(context, "ERROR", Colors.red);
@@ -140,8 +140,7 @@ class NetworkWeb {
     }
   }
 
-
-   static Future<bool> register(String username, String password, String emailid,
+  static Future<bool> register(String username, String password, String emailid,
       BuildContext context) async {
     var url = Uri.parse(Api.register);
     Map body = {
@@ -208,6 +207,57 @@ class NetworkWeb {
       customSnackBar(context, "ERROR", Colors.red);
       log(error.toString());
       return false;
+    }
+  }
+
+  static Future<List<Pass>> retrieve(BuildContext context) async {
+    var url = Uri.parse(Api.retrieve);
+    String token = await Storage.getToken();
+    Map body = {'JWT_TOKEN': token};
+    try {
+      final response = await Http.post(url, body: body);
+      if (response.statusCode == 200) {
+        List data = json.decode(response.body);
+        log(data.toString());
+        return data.map((e) => Pass.fromJson(e)).toList();
+      } else {
+        log(response.body);
+        customSnackBar(context, "ERROR", Colors.red);
+        return [];
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+      return [];
+    }
+  }
+
+  static Future<String> decrypt(
+    String encryptedPass,
+    BuildContext context,
+  ) async {
+    var url = Uri.parse(Api.decrypt);
+    String token = await Storage.getToken();
+    String apppass = await Storage.getPassword();
+    Map body = {
+      'JWT_TOKEN': token,
+      'APP_PASS': encryptedPass,
+      'PASS': apppass,
+    };
+    try {
+      final response = await Http.post(url, body: body);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        return data['PASSWORD'];
+      } else {
+        log(response.body);
+        customSnackBar(context, "ERROR", Colors.red);
+        return "";
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.black);
+      log(error.toString());
+      return "";
     }
   }
 }
