@@ -5,7 +5,7 @@ import 'package:hassle_free/screens/Register.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
 
 class LoginWeb extends StatefulWidget {
-  const LoginWeb({ Key? key }) : super(key: key);
+  const LoginWeb({Key? key}) : super(key: key);
 
   @override
   State<LoginWeb> createState() => _LoginWebState();
@@ -18,9 +18,13 @@ class _LoginWebState extends State<LoginWeb> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constaints) {
         if (constaints.maxWidth <= mobileLimit) {
-            return LoginWebView(maxWidth: constaints.maxWidth, maxHeight: constaints.maxHeight);
+          return LoginWebView(
+              maxWidth: constaints.maxWidth, maxHeight: constaints.maxHeight);
         } else {
-          return LoginWebView(maxWidth: constaints.maxWidth/2.85,maxHeight: constaints.maxHeight,);
+          return LoginWebView(
+            maxWidth: constaints.maxWidth / 2.85,
+            maxHeight: constaints.maxHeight,
+          );
         }
       },
     );
@@ -28,7 +32,9 @@ class _LoginWebState extends State<LoginWeb> {
 }
 
 class LoginWebView extends StatefulWidget {
-  const LoginWebView({required this.maxHeight , required this.maxWidth, Key? key }) : super(key: key);
+  const LoginWebView(
+      {required this.maxHeight, required this.maxWidth, Key? key})
+      : super(key: key);
   final double maxWidth;
   final double maxHeight;
   @override
@@ -44,7 +50,6 @@ class _LoginWebViewState extends State<LoginWebView> {
   bool _showPasswordEnabled = true;
   final formGlobalKey = GlobalKey<FormState>();
 
-  
   void _redirect() async {
     await NetworkWeb.authweb(context);
   }
@@ -166,8 +171,8 @@ class _LoginWebViewState extends State<LoginWebView> {
                                         prefixIcon:
                                             Icon(Icons.person_outline_outlined),
                                         hintText: "USERNAME",
-                                        hintStyle:
-                                            TextStyle(fontSize: widget.maxHeight * 0.025),
+                                        hintStyle: TextStyle(
+                                            fontSize: widget.maxHeight * 0.025),
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(25.0),
@@ -222,8 +227,8 @@ class _LoginWebViewState extends State<LoginWebView> {
                                               BorderRadius.circular(25.0),
                                         ),
                                         hintText: "PASSWORD",
-                                        hintStyle:
-                                            TextStyle(fontSize: widget.maxHeight * 0.025),
+                                        hintStyle: TextStyle(
+                                            fontSize: widget.maxHeight * 0.025),
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(25.0),
@@ -258,51 +263,57 @@ class _LoginWebViewState extends State<LoginWebView> {
                               ),
                             ),
                             _signUpButtonEnabled
-                                ? GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        _usernameEnabled = false;
-                                        _passwordEnabled = false;
-                                        _signUpButtonEnabled = false;
-                                      });
-                                      await _validatelogin();
-                                      setState(() {
-                                        _usernameEnabled = true;
-                                        _passwordEnabled = true;
-                                        _signUpButtonEnabled = true;
-                                      });
-                                    },
-                                    child: Container(
-                                      // duration: Duration(milliseconds: 500),
-                                      height: widget.maxHeight * 0.085,
-                                      width: widget.maxWidth,
-                                      decoration: BoxDecoration(
-                                        color: ThemeColors.kBackGroundColor,
+                                ? Container(
+                                    // duration: Duration(milliseconds: 500),
+                                    height: widget.maxHeight * 0.085,
+                                    width: widget.maxWidth,
+                                    decoration: BoxDecoration(
+                                      color: ThemeColors.kBackGroundColor,
+                                      borderRadius: BorderRadius.circular(30),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ThemeColors.kDarkShadowColor,
+                                          offset: Offset(4, 4),
+                                          blurRadius: 15,
+                                          spreadRadius: 1,
+                                        ),
+                                        BoxShadow(
+                                          color: ThemeColors.kLightShadowColor,
+                                          offset: Offset(-4, -4),
+                                          blurRadius: 15,
+                                          spreadRadius: 1,
+                                        )
+                                      ],
+                                    ),
+                                    child: Material(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: ThemeColors.kBackGroundColor,
+                                      child: InkWell(
+                                        highlightColor: Colors.transparent,
                                         borderRadius: BorderRadius.circular(30),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ThemeColors.kDarkShadowColor,
-                                            offset: Offset(4, 4),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                          BoxShadow(
-                                            color:
-                                                ThemeColors.kLightShadowColor,
-                                            offset: Offset(-4, -4),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          )
-                                        ],
+                                        onTap: () async {
+                                          setState(() {
+                                            _usernameEnabled = false;
+                                            _passwordEnabled = false;
+                                            _signUpButtonEnabled = false;
+                                          });
+                                          await _validatelogin();
+                                          setState(() {
+                                            _usernameEnabled = true;
+                                            _passwordEnabled = true;
+                                            _signUpButtonEnabled = true;
+                                          });
+                                        },
+                                        child: Center(
+                                            child: Text(
+                                          "LOGIN",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize:
+                                                  widget.maxHeight * 0.025,
+                                              color: ThemeColors.kTextColor),
+                                        )),
                                       ),
-                                      child: Center(
-                                          child: Text(
-                                        "LOGIN",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: widget.maxHeight * 0.025,
-                                            color: ThemeColors.kTextColor),
-                                      )),
                                     ),
                                   )
                                 : Container(

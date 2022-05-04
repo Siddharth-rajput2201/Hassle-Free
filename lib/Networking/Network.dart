@@ -477,10 +477,7 @@ class Network {
         }
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
-        } else {
-          log(response.body);
-          customSnackBar(context, "ERROR", Colors.red);
-        }
+        } 
       }
     } catch (error) {
       customSnackBar(context, "ERROR", Colors.red);

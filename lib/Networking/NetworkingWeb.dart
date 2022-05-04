@@ -101,4 +101,41 @@ class NetworkWeb {
       return false;
     }
   }
+
+   static Future<void> resendemail(BuildContext context) async {
+    var url = Uri.parse(Api.resendEmail);
+    String username = await Storage.getUserName();
+    String password = await Storage.getPassword();
+    Map body = {
+      'USER_NAME': username,
+      'USER_PASSWORD': password,
+    };
+    try {
+      final response = await Http.post(url, body: body);
+      var data = json.decode(response.body);
+      if (response.statusCode == 201 &&
+          data['message'] == "EMAIL SUCCESSFULLY SENT") {
+        customSnackBar(context, "EMAIL SENT SUCCESSFULLY", Colors.green);
+      } else {
+        if (data['message'] == "UNAUTHORIZED") {
+          customSnackBar(context, "UNAUTHORIZED", Colors.red);
+        }
+        if (data['message'] == "INVALID CREDENTIALS") {
+          customSnackBar(context, "INVALID CREDENTIALS", Colors.red);
+        }
+        if (data['message'] == "USER DOES NOT EXIST") {
+          customSnackBar(context, "NO USER FOUND", Colors.red);
+        }
+        if (data['message'] == "ACCOUNT ALREADY VERIFIED") {
+          customSnackBar(context, "ACCOUNT ALREADY VERIFIED", Colors.green);
+        }
+        if (data['message'] == "MISSING TOKEN") {
+          customSnackBar(context, "TOKEN ERROR", Colors.red);
+        } 
+      }
+    } catch (error) {
+      customSnackBar(context, "ERROR", Colors.red);
+      log(error.toString());
+    }
+  }
 }
