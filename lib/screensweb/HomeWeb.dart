@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
-import 'package:hassle_free/screens/DeleteAccount.dart';
+import 'package:hassle_free/screensweb/DeleteAccountWeb.dart';
+
 import 'package:hassle_free/screensweb/GenPassWeb.dart';
 import 'package:hassle_free/screensweb/LoginWeb.dart';
 import 'package:hassle_free/screensweb/UserPassWeb.dart';
@@ -86,7 +87,7 @@ class _HomeWebViewState extends State<HomeWebView> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DeleteAccount()),
+                      MaterialPageRoute(builder: (context) => DeleteAccountWeb()),
                     );
                   },
                   leading: Icon(

@@ -3,11 +3,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
 import 'package:hassle_free/Networking/NetworkingWeb.dart';
-import 'package:hassle_free/utils/BottomModalSheetAddPass.dart';
 import 'package:hassle_free/utils/BottomModalSheetDelete.dart';
 import 'package:hassle_free/utils/BottomModalSheetEdit.dart';
 import 'package:hassle_free/utils/CustomSnackBar.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
+import 'package:hassle_free/utilsweb/DialogBoxAddPass.dart';
+import 'package:hassle_free/utilsweb/DialogBoxDelete.dart';
+import 'package:hassle_free/utilsweb/DialogBoxEdit.dart';
 import 'package:shimmer/shimmer.dart';
 
 class UserPassWeb extends StatefulWidget {
@@ -83,17 +85,24 @@ class _UserPassWebViewState extends State<UserPassWebView> {
                 elevation: 0,
                 backgroundColor: ThemeColors.kBackGroundColor,
                 onPressed: () async {
-                  await showModalBottomSheet(
-                      backgroundColor: ThemeColors.kBackGroundColor,
-                      isScrollControlled: true,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25))),
+                  await showDialog(
+                      // backgroundColor: ThemeColors.kBackGroundColor,
+                      // isScrollControlled: true,
+                      // shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.only(
+                      //         topLeft: Radius.circular(25),
+                      //         topRight: Radius.circular(25))),
                       context: context,
                       builder: (context) {
-                        return BottomModalSheetAddPass();
-                      });
+                        return Dialog(
+                          backgroundColor: ThemeColors.kBackGroundColor,
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(25),
+                          )),
+                          child: DialogBoxAddPass(),);
+                      }
+                      );
                   setState(() {});
                 },
                 child: Icon(
@@ -876,30 +885,31 @@ class _UserPassWebViewState extends State<UserPassWebView> {
                                                                 Radius.circular(
                                                                     50)),
                                                         onTap: () async {
-                                                          await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  ThemeColors
-                                                                      .kBackGroundColor,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius: BorderRadius.only(
-                                                                      topLeft: Radius
-                                                                          .circular(
-                                                                              25),
-                                                                      topRight: Radius
-                                                                          .circular(
-                                                                              25))),
+                                                          await showDialog(
                                                               context: context,
-                                                              builder: (builder) {
-                                                                return BottomModalSheetEdit(
-                                                                    appname: passData[
-                                                                            index]
-                                                                        .appName,
-                                                                    passwordId: passData[
-                                                                            index]
-                                                                        .passwordId
-                                                                        .toString());
+                                                              builder:
+                                                                  (builder) {
+                                                                return Dialog(
+                                                                  backgroundColor:
+                                                                      ThemeColors
+                                                                          .kBackGroundColor,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            25),
+                                                                  ),),
+                                                                  child: DialogBoxEdit(
+                                                                      appname: passData[
+                                                                              index]
+                                                                          .appName,
+                                                                      passwordId: passData[
+                                                                              index]
+                                                                          .passwordId
+                                                                          .toString()),
+                                                                );
                                                               });
                                                           setState(() {});
                                                         },
@@ -949,30 +959,31 @@ class _UserPassWebViewState extends State<UserPassWebView> {
                                                                 Radius.circular(
                                                                     50)),
                                                         onTap: () async {
-                                                          await showModalBottomSheet(
-                                                              backgroundColor:
-                                                                  ThemeColors
-                                                                      .kBackGroundColor,
-                                                              isScrollControlled:
-                                                                  true,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius: BorderRadius.only(
-                                                                      topLeft: Radius
-                                                                          .circular(
-                                                                              25),
-                                                                      topRight: Radius
-                                                                          .circular(
-                                                                              25))),
+                                                          await showDialog(
                                                               context: context,
-                                                              builder: (context) {
-                                                                return BottomModalSheetDelete(
-                                                                  appName: passData[
+                                                              builder:
+                                                                  (builder) {
+                                                                return Dialog(
+                                                                  backgroundColor:
+                                                                      ThemeColors
+                                                                          .kBackGroundColor,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            25),
+                                                                  ),),
+                                                                  child: DialogBoxDelete(
+                                                                            appName: passData[
                                                                           index]
                                                                       .appName,
                                                                   passwordId: passData[
                                                                           index]
                                                                       .passwordId
                                                                       .toString(),
+                                                                          ),
                                                                 );
                                                               });
                                                           setState(() {});
