@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/NetworkingWeb.dart';
 import 'package:hassle_free/screens/Register.dart';
+import 'package:hassle_free/screensweb/RegisterWeb.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
 
 class LoginWeb extends StatefulWidget {
@@ -375,7 +376,7 @@ class _LoginWebViewState extends State<LoginWebView> {
                                   ..onTap = () => Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Register()),
+                                            builder: (context) => RegisterWeb()),
                                       ),
                                 text: " SIGN UP",
                                 style: TextStyle(color: Colors.blue))

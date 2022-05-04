@@ -14,7 +14,7 @@ class EmailVerificationWebRegister extends StatefulWidget {
 }
 
 class _EmailVerificationWebRegisterState
-    extends State<EmailVerificationWebRegister> {
+  extends State<EmailVerificationWebRegister> {
   static int mobileLimit = 640;
   @override
   Widget build(BuildContext context) {
