@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/NetworkingWeb.dart';
-import 'package:hassle_free/screens/Register.dart';
 import 'package:hassle_free/screensweb/RegisterWeb.dart';
 import 'package:hassle_free/utils/ThemeColors.dart';
 
