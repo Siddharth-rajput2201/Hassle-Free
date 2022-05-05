@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -62,7 +61,6 @@ class NetworkWeb {
         await prefs.setString("token", data['token']);
         await prefs.setString("username", username);
         await prefs.setString("password", password);
-        log(data['token'].toString());
         //Storage.storeUsername(username);
         //Storage.storePassword(password);
         return true;
@@ -94,7 +92,7 @@ class NetworkWeb {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
-        } 
+        }
       }
     } catch (error) {
       customSnackBar(context, "ERROR", Colors.red);
@@ -142,6 +140,7 @@ class NetworkWeb {
 
   static Future<bool> register(String username, String password, String emailid,
       BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.register);
     Map body = {
       'USER_NAME': username,
@@ -153,6 +152,8 @@ class NetworkWeb {
       var data = json.decode(response.body);
       if (response.statusCode == 201 &&
           data['message'] == "REGISTERED SUCCESSFULLY") {
+        await prefs.setString("username", username);
+        await prefs.setString("password", password);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

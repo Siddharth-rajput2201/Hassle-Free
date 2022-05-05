@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
   static Future<bool> login(
-    String username, String password, BuildContext context) async {
+      String username, String password, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.login);
     Map body = {'USER_NAME': username, 'USER_PASSWORD': password};
@@ -68,6 +68,7 @@ class Network {
 
   static Future<bool> register(String username, String password, String emailid,
       BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var url = Uri.parse(Api.register);
     Map body = {
       'USER_NAME': username,
@@ -79,6 +80,8 @@ class Network {
       var data = json.decode(response.body);
       if (response.statusCode == 201 &&
           data['message'] == "REGISTERED SUCCESSFULLY") {
+        await prefs.setString("username", username);
+        await prefs.setString("password", password);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -477,7 +480,7 @@ class Network {
         }
         if (data['message'] == "MISSING TOKEN") {
           customSnackBar(context, "TOKEN ERROR", Colors.red);
-        } 
+        }
       }
     } catch (error) {
       customSnackBar(context, "ERROR", Colors.red);
