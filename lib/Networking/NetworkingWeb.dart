@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hassle_free/Networking/Api.dart';
 import 'package:hassle_free/Networking/Classes/Pass.dart';
-import 'package:hassle_free/screens/EmailVerification.dart';
 import 'package:hassle_free/screensweb/EmailVerificationRegisterWeb.dart';
 import 'package:hassle_free/screensweb/EmailVerificationWeb.dart';
 import 'package:hassle_free/screensweb/HomeWeb.dart';
@@ -95,7 +94,7 @@ class NetworkWeb {
           log(response.body);
           customSnackBar(context, "ERROR", Colors.red);
           return false;
-        }
+        } 
       }
     } catch (error) {
       customSnackBar(context, "ERROR", Colors.red);
