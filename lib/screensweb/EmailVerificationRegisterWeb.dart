@@ -68,7 +68,7 @@ class _EmailVerificationWebRegisterViewState
           child: SizedBox(
             height: widget.maxHeight * 0.95,
             child: Column(
-               mainAxisAlignment: width <= 640 ?  MainAxisAlignment.spaceEvenly: MainAxisAlignment.center,
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   height: widget.maxHeight * 0.55,
@@ -125,7 +125,7 @@ class _EmailVerificationWebRegisterViewState
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: width <= 640 ?  MainAxisAlignment.spaceEvenly: MainAxisAlignment.center,
                   children: [
                     _showResendEmailButton
                         ? Container(
